@@ -68,7 +68,7 @@ dns:
 #   asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
 # 策略组引用
-Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT]}
+Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT]}
 Pro: &a1 {type: http, interval: 28800, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800}}
 Auto: &a4 {type: url-test, lazy: true, url: http://www.gstatic.com/generate_204, interval: 300, use: [Subscribe]}
 Man: &a2 {type: select, use: [Subscribe]}
@@ -106,13 +106,13 @@ proxy-groups:
   - {name: Microsoft, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Microsoft.png }
   
   # 节点分组
-  - {name: 香港节点, <<: *a4, filter: "香港", icon: https://hoofei.com/clash/Icons/HK.png}
-  - {name: 日本节点, <<: *a4, filter: "日本", icon: https://hoofei.com/clash/Icons/JP.png}
-  - {name: 台湾节点, <<: *a4, filter: "台湾", icon: https://hoofei.com/clash/Icons/TW.png}
-  - {name: 美国节点, <<: *a4, filter: "美国", icon: https://hoofei.com/clash/Icons/US.png}
-  - {name: 狮城节点, <<: *a4, filter: "狮城", icon: https://hoofei.com/clash/Icons/SG.png}
-  - {name: 英国节点, <<: *a4, filter: "英国", icon: https://hoofei.com/clash/Icons/UK.png}
-  - {name: 德国节点, <<: *a4, filter: "德国", icon: https://hoofei.com/clash/Icons/DE.png}
+  - {name: 香港节点, <<: *a4, filter: "香港"}
+  - {name: 日本节点, <<: *a4, filter: "日本"}
+  - {name: 台湾节点, <<: *a4, filter: "台湾"}
+  - {name: 美国节点, <<: *a4, filter: "美国"}
+  - {name: 狮城节点, <<: *a4, filter: "狮城"}
+  - {name: 英国节点, <<: *a4, filter: "英国"}
+  - {name: 德国节点, <<: *a4, filter: "德国"}
   
 
 rule-providers:
@@ -149,8 +149,6 @@ rules:
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Claude,Claude
   - RULE-SET,Crypto,Crypto
-  - RULE-SET,Binance,Binance
-  - RULE-SET,OKX,OKX
   - RULE-SET,TikTok,TikTok
   - RULE-SET,Facebook,Facebook
   - RULE-SET,GitHub,GitHub
