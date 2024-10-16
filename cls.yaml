@@ -91,23 +91,23 @@ proxy-groups:
   - {name: 手动选择, <<: *a2, icon: https://hoofei.com/clash/Icons/Manual.png }
   - {name: 全球网络, <<: *a3, icon: https://hoofei.com/clash/Icons/Proxy.png}
   - {name: 漏网之鱼, <<: *a3, icon: https://hoofei.com/clash/Icons/Match.png}
-  - {name: OpenAI, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
-  - {name: Claude, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Claude.png }
-  - {name: Crypto, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Crypto.png }
-  - {name: Binance, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Binance.png }
-  - {name: OKX, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/OKX.png }
-  - {name: GitHub, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/GitHub.png }
-  - {name: TikTok, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/TikTok.png }
-  - {name: Netflix, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Netflix.png }
-  - {name: YouTube, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/YouTube.png }
-  - {name: Spotify, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Spotify.png }
-  - {name: Telegram, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Telegram.png }
-  - {name: WhatsApp, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Whatsapp.png }
-  - {name: Facebook, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Facebook.png }
-  - {name: PayPal, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/PayPal.png }
-  - {name: Apple, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Apple.png }
-  - {name: Google, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Google.png }
-  - {name: Microsoft, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点，DIRECT], icon: https://hoofei.com/clash/Icons/Microsoft.png }
+  - {name: OpenAI, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
+  - {name: Claude, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Claude.png }
+  - {name: Crypto, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Crypto.png }
+  - {name: Binance, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Binance.png }
+  - {name: OKX, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OKX.png }
+  - {name: GitHub, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/GitHub.png }
+  - {name: TikTok, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/TikTok.png }
+  - {name: Netflix, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Netflix.png }
+  - {name: YouTube, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/YouTube.png }
+  - {name: Spotify, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Spotify.png }
+  - {name: Telegram, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Telegram.png }
+  - {name: WhatsApp, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Whatsapp.png }
+  - {name: Facebook, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Facebook.png }
+  - {name: PayPal, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/PayPal.png }
+  - {name: Apple, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Apple.png }
+  - {name: Google, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Google.png }
+  - {name: Microsoft, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Microsoft.png }
   
   # 节点分组
   - {name: 香港节点, <<: *a4, filter: "香港", icon: https://hoofei.com/clash/Icons/HK.png}
