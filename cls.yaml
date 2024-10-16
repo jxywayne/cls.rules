@@ -1,180 +1,550 @@
-#==========================================
-# @ConfigName        自用 Clash 配置文件
-# @Author            @hoofei
-# @UpdateTime        2024年10月14日 06:00
-# @Function          支持手动选择、自动测速、广告屏蔽、兜底分流、按国家分组节点、多机场订阅等等
-# @ConfigVersion     1.1.2
-#==========================================
-
-port: 7890 # HTTP(S) 代理服务器端口
-socks-port: 7891 # SOCKS5 代理端口
-mixed-port: 7893 # HTTP(S) 和 SOCKS 代理混合端口
-redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
-tproxy-port: 7893 # 透明代理端口，用于 Linux (TProxy TCP and TProxy UDP)
-allow-lan: true # 允许局域网连接
-bind-address: '*' # 绑定 IP 地址，仅作用于 allow-lan 为 true 时，'*'表示所有地址
-mode: rule # 'rule' 规则 / 'global' 全局 / 'direct' 直连
-log-level: silent # 日志等级 silent/error/warning/info/debug
-ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
-external-controller: 127.0.0.1:9090
-hosts:
-  # '*.mihomo.dev': 127.0.0.1
-  # '.dev': 127.0.0.1
-  # 'alpha.mihomo.dev': '::1'
-  # test.com: [1.1.1.1, 2.2.2.2]
-  # home.lan: lan # lan 为特别字段，将加入本地所有网卡的地址
-  # baidu.com: google.com # 只允许配置一个别名
-
-# DNS 配置
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
 dns:
-  cache-algorithm: arc
-  enable: false # 关闭将使用系统 DNS
-  prefer-h3: false # 是否开启 DoH 支持 HTTP/3，将并发尝试
-  listen: 0.0.0.0:53 # 开启 DNS 服务器监听
-  # ipv6: false # false 将返回 AAAA 的空结果
-  # ipv6-timeout: 300 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
-  # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
-  # 只能使用纯 IP 地址，可使用加密 DNS
-  default-nameserver:
-    - 119.29.29.29 # 腾讯公共DNS
-    - 114.114.114.114 # 114DNS
-  enhanced-mode: fake-ip # redir-host or fake-ip
-  fake-ip-range: 198.18.0.1/16 # Fake IP 池设置
-  nameserver:
-    - 119.29.29.29 # 腾讯公共DNS
-    - 114.114.114.114 # 114DNS
-    - https://doh.pub/dns-query # DNS over HTTPS
-    - https://dns.alidns.com/dns-query#h3=true # 强制 HTTP/3，与 perfer-h3 无关，强制开启 DoH 的 HTTP/3 支持，若不支持将无法使用
-    - https://mozilla.cloudflare-dns.com/dns-query#DNS&h3=true # 指定策略组和使用 HTTP/3
-    - dhcp://en0 # DNS from DHCP
-    - quic://dns.adguard.com:784 # DNS over QUIC
-  
-  # 配置 fallback
-  fallback:
-   - tcp://1.1.1.1
-  fallback-filter:
-    geoip: true # 配置是否使用 geoip
-    geoip-code: CN # 当 nameserver 域名的 IP 查询 geoip 库为 CN 时，不使用 fallback 中的 DNS 查询结果
-    ipcidr:
-      - 240.0.0.0/4
-
-# GEO配置
-# geodata-mode: true # 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false，true为dat，此项有默认值 false
-# geodata-loader: memconservative # GEO文件加载模式，standard 标准加载器 / memconservative 专为内存受限 (小内存) 设备优化的加载器 (默认值)
-# geo-auto-update: true # 自动更新 GEO
-# geo-update-interval: 720 # 更新间隔，单位为小时
-# geox-url:
-#   geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
-#   geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
-#   mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
-#   asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
-
-# 策略组引用
-Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,家宽节点,DIRECT]}
-Pro: &a1 {type: http, interval: 28800, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800}}
-Auto: &a4 {type: url-test, lazy: true, url: http://www.gstatic.com/generate_204, interval: 300, use: [Subscribe]}
-Man: &a2 {type: select, use: [Subscribe]}
-classical: &a6 {type: http, behavior: classical, interval: 28800}
-domain: &a5 {type: http, behavior: domain, interval: 28800}
-ipcidr: &a7 {type: http, behavior: ipcidr, interval: 28800}
-
+    enable: true
+    ipv6: false
+    default-nameserver: [223.5.5.5, 119.29.29.29]
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.1/16
+    use-hosts: true
+    nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
+    fallback: ['https://doh.dns.sb/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.twnic.tw/dns-query', 'tls://8.8.4.4:853']
+    fallback-filter: { geoip: true, ipcidr: [240.0.0.0/4, 0.0.0.0/32] }
 proxy-providers:
-  Subscribe:
-    <<: *a1
-    url: https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f # 你的节点订阅地址
-    path: ./proxy_providers/Airport.yaml
-    
-proxies: null
+  FlyingBird-HongKong:
+    type: http
+    path: ./ProxySet/Squirrel Cloud/HongKong.yaml
+    url: https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f
+    interval: 1800
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
 proxy-groups:
-  # 分流分组
-  - {name: 自动选择, <<: *a4, icon: https://hoofei.com/clash/Icons/Auto.png}
-  - {name: 手动选择, <<: *a2, icon: https://hoofei.com/clash/Icons/Manual.png }
-  - {name: 全球网络, <<: *a3, icon: https://hoofei.com/clash/Icons/Proxy.png}
-  - {name: 漏网之鱼, <<: *a3, icon: https://hoofei.com/clash/Icons/Match.png}
-  - {name: OpenAI, type: select, proxies: [家宽节点][美国节点], icon: https://hoofei.com/clash/Icons/OpenAI.png }
-  - {name: Claude, type: select, proxies: [家宽节点], icon: https://hoofei.com/clash/Icons/Claude.png }
-  - {name: Crypto, type: select, proxies: [狮城节点], icon: https://hoofei.com/clash/Icons/Crypto.png }
-  - {name: Binance, type: select, proxies: [狮城节点], icon: https://hoofei.com/clash/Icons/Binance.png }
-  - {name: OKX, type: select, proxies: [狮城节点], icon: https://hoofei.com/clash/Icons/OKX.png }
-  - {name: GitHub, type: select, proxies: [美国节点], icon: https://hoofei.com/clash/Icons/GitHub.png }
-  - {name: TikTok, type: select, proxies: [家宽节点], icon: https://hoofei.com/clash/Icons/TikTok.png }
-  - {name: Netflix, type: select, proxies: [家宽节点], icon: https://hoofei.com/clash/Icons/Netflix.png }
-  - {name: YouTube, type: select, proxies: [直连节点], icon: https://hoofei.com/clash/Icons/YouTube.png }
-  - {name: Spotify, type: select, proxies: [美国节点], icon: https://hoofei.com/clash/Icons/Spotify.png }
-  - {name: Telegram, type: select, proxies: [美国节点], icon: https://hoofei.com/clash/Icons/Telegram.png }
-  - {name: WhatsApp, type: select, proxies: [家宽节点], icon: https://hoofei.com/clash/Icons/Whatsapp.png }
-  - {name: Facebook, type: select, proxies: [美国节点], icon: https://hoofei.com/clash/Icons/Facebook.png }
-  - {name: PayPal, type: select, proxies: [家宽节点], icon: https://hoofei.com/clash/Icons/PayPal.png }
-  - {name: Apple, type: select, proxies: [美国节点], icon: https://hoofei.com/clash/Icons/Apple.png }
-  - {name: Google, type: select, proxies: [美国节点], icon: https://hoofei.com/clash/Icons/Google.png }
-  - {name: Microsoft, type: select, proxies: [美国节点], icon: https://hoofei.com/clash/Icons/Microsoft.png }
-  
-  # 节点分组
-  - {name: 香港节点, <<: *a4, filter: "香港|HK|(?i)Hong", icon: https://hoofei.com/clash/Icons/HK.png}
-  - {name: 日本节点, <<: *a4, filter: "日本|东京|JP|(?i)Japan", icon: https://hoofei.com/clash/Icons/JP.png}
-  - {name: 台湾节点, <<: *a4, filter: "台湾|TW|(?i)Taiwan", icon: https://hoofei.com/clash/Icons/TW.png}
-  - {name: 美国节点, <<: *a4, filter: "美国|美西|美东|洛杉矶|US|(?i)States|American", icon: https://hoofei.com/clash/Icons/US.png}
-  - {name: 狮城节点, <<: *a4, filter: "新加坡|狮城|SG|(?i)Singapore", icon: https://hoofei.com/clash/Icons/SG.png}
-  - {name: 家宽节点, <<: *a4, filter: "家宽|住宅|(?i)ISP|AT&T|Verizon", icon: https://hoofei.com/clash/Icons/ISP.png}
-  - {name: 直连节点, <<: *a4, filter: "直连|VLESS|VMESS", icon: https://hoofei.com/clash/Icons/Direct.png}
-  - {name: 专线中转, <<: *a4, filter: "中转|专线|沪日|广港|沪港|深港|广移|IEPL|IPLC", icon: https://hoofei.com/clash/Icons/Forward.png}
-
-rule-providers:
-  Advertising: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Classical.yaml, path: ./ruleset/Advertising_Classical.yaml}
-  Apple: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml, path: ./ruleset/Apple_Classical.yaml}
-  OpenAI: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml, path: ./ruleset/OpenAI.yaml}
-  Claude: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Claude/Claude.yaml, path: ./ruleset/Claude.yaml}
-  Crypto: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Crypto/Crypto.yaml, path: ./ruleset/Crypto.yaml}
-  Binance: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Binance/Binance.yaml, path: ./ruleset/Binance.yaml}
-  OKX: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OKX/OKX.yaml, path: ./ruleset/OKX.yaml}
-  TikTok: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/TikTok/TikTok.yaml, path: ./ruleset/TikTok.yaml}
-  Facebook: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Facebook/Facebook.yaml, path: ./ruleset/Facebook.yaml}
-  GitHub: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml, path: ./ruleset/GitHub.yaml}
-  Google: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml, path: ./ruleset/Google.yaml}
-  Microsoft: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml, path: ./ruleset/Microsoft.yaml}
-  Netflix: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Netflix/Netflix_Classical.yaml, path: ./ruleset/Netflix_Classical.yaml}
-  NetEase: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/NetEase/NetEase.yaml, path: ./ruleset/NetEase.yaml}
-  NetEaseMusic: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/NetEaseMusic/NetEaseMusic.yaml, path: ./ruleset/NetEaseMusic.yaml}
-  Spotify: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Spotify/Spotify.yaml, path: ./ruleset/Spotify.yaml}
-  Steam: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Steam/Steam.yaml, path: ./ruleset/Steam.yaml}
-  Telegram: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml, path: ./ruleset/Telegram.yaml}
-  Tencent: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Tencent/Tencent.yaml, path: ./ruleset/Tencent.yaml}
-  TencentVideo: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/TencentVideo/TencentVideo.yaml, path: ./ruleset/TencentVideo.yaml}
-  YouTube: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml, path: ./ruleset/YouTube.yaml}
-  WhatsApp: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Whatsapp/Whatsapp.yaml, path: ./ruleset/WhatsApp.yaml}
-  WeChat: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/WeChat/WeChat.yaml, path: ./ruleset/WeChat.yaml}
-  PayPal: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/PayPal/PayPal.yaml, path: ./ruleset/PayPal.yaml}
-  Lan: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml, path: ./ruleset/Lan.yaml}
-  ChinaIP: {<<: *a7, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaIPs/ChinaIPs_IP.yaml, path: ./ruleset/ChinaIPs_IP.yaml}
-  Proxy: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ProxyLite/ProxyLite.yaml, path: ./ruleset/ProxyLite.yaml}
-  
+    - { name: Squirrel Cloud, type: select, proxies: [自动选择, 故障转移, '剩余流量：99894.33 GB', 套餐到期：长期有效, 🇭🇰香港-腾讯BGP-DMIT, 🇭🇰香港-HyperCU-DMIT, 🇭🇰香港-HyperCT-DMIT, 🇭🇰香港-唯云BGP-DMIT, 🇭🇰香港-腾讯BGP-BageVM, 🇭🇰香港-唯云BGP-BageVM, 🇭🇰香港-腾讯BGP-HKT, 🇭🇰香港-唯云BGP-HKT, 🇨🇳台湾-腾讯BGP-Hinet, 🇸🇬狮城-腾讯BGP-BageVM, 🇯🇵日本-苏日BGP-BageVM, 🇩🇪德国-腾讯BGP-BageVM, 🇬🇧英国-腾讯BGP-BageVM, 🇺🇸美国-腾讯BGP-BageVM] }
+    - { name: 自动选择, type: url-test, proxies: ['剩余流量：99894.33 GB', 套餐到期：长期有效, 🇭🇰香港-腾讯BGP-DMIT, 🇭🇰香港-HyperCU-DMIT, 🇭🇰香港-HyperCT-DMIT, 🇭🇰香港-唯云BGP-DMIT, 🇭🇰香港-腾讯BGP-BageVM, 🇭🇰香港-唯云BGP-BageVM, 🇭🇰香港-腾讯BGP-HKT, 🇭🇰香港-唯云BGP-HKT, 🇨🇳台湾-腾讯BGP-Hinet, 🇸🇬狮城-腾讯BGP-BageVM, 🇯🇵日本-苏日BGP-BageVM, 🇩🇪德国-腾讯BGP-BageVM, 🇬🇧英国-腾讯BGP-BageVM, 🇺🇸美国-腾讯BGP-BageVM], url: 'http://www.gstatic.com/generate_204', interval: 86400 }
+    - { name: 故障转移, type: fallback, proxies: ['剩余流量：99894.33 GB', 套餐到期：长期有效, 🇭🇰香港-腾讯BGP-DMIT, 🇭🇰香港-HyperCU-DMIT, 🇭🇰香港-HyperCT-DMIT, 🇭🇰香港-唯云BGP-DMIT, 🇭🇰香港-腾讯BGP-BageVM, 🇭🇰香港-唯云BGP-BageVM, 🇭🇰香港-腾讯BGP-HKT, 🇭🇰香港-唯云BGP-HKT, 🇨🇳台湾-腾讯BGP-Hinet, 🇸🇬狮城-腾讯BGP-BageVM, 🇯🇵日本-苏日BGP-BageVM, 🇩🇪德国-腾讯BGP-BageVM, 🇬🇧英国-腾讯BGP-BageVM, 🇺🇸美国-腾讯BGP-BageVM], url: 'http://www.gstatic.com/generate_204', interval: 7200 }
 rules:
-# 分流
-  - RULE-SET,Advertising,REJECT
-  - RULE-SET,Apple,Apple
-  - RULE-SET,OpenAI,OpenAI
-  - RULE-SET,Claude,Claude
-  - RULE-SET,Crypto,Crypto
-  - RULE-SET,Binance,Binance
-  - RULE-SET,OKX,OKX
-  - RULE-SET,TikTok,TikTok
-  - RULE-SET,Facebook,Facebook
-  - RULE-SET,GitHub,GitHub
-  - RULE-SET,Google,Google
-  - RULE-SET,Microsoft,Microsoft
-  - RULE-SET,Netflix,Netflix
-  - RULE-SET,NetEase,DIRECT
-  - RULE-SET,NetEaseMusic,DIRECT
-  - RULE-SET,Spotify,Spotify
-  - RULE-SET,Steam,DIRECT
-  - RULE-SET,Telegram,Telegram
-  - RULE-SET,Tencent,DIRECT
-  - RULE-SET,TencentVideo,DIRECT
-  - RULE-SET,YouTube,YouTube
-  - RULE-SET,WhatsApp,WhatsApp
-  - RULE-SET,WeChat,DIRECT
-  - RULE-SET,PayPal,PayPal
-  - RULE-SET,ChinaIP,DIRECT
-  - RULE-SET,Proxy,全球网络
-  - GEOIP,CN,DIRECT
-  - MATCH,漏网之鱼
+    - 'IP-CIDR,42.157.161.191/32,DIRECT,no-resolve'
+    - 'IP-CIDR,211.99.100.249/32,DIRECT,no-resolve'
+    - 'IP-CIDR,121.14.61.72/32,DIRECT,no-resolve'
+    - 'IP-CIDR,58.254.183.242/32,DIRECT,no-resolve'
+    - 'IP-CIDR,109.244.76.13/32,DIRECT,no-resolve'
+    - 'DOMAIN,xpanel.6969819.com,DIRECT'
+    - 'DOMAIN-SUFFIX,services.googleapis.cn,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,xn--ngstr-lra8j.com,Squirrel Cloud'
+    - 'DOMAIN,safebrowsing.urlsec.qq.com,DIRECT'
+    - 'DOMAIN,safebrowsing.googleapis.com,DIRECT'
+    - 'DOMAIN,developer.apple.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,digicert.com,Squirrel Cloud'
+    - 'DOMAIN,ocsp.apple.com,Squirrel Cloud'
+    - 'DOMAIN,ocsp.comodoca.com,Squirrel Cloud'
+    - 'DOMAIN,ocsp.usertrust.com,Squirrel Cloud'
+    - 'DOMAIN,ocsp.sectigo.com,Squirrel Cloud'
+    - 'DOMAIN,ocsp.verisign.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,apple-dns.net,Squirrel Cloud'
+    - 'DOMAIN,testflight.apple.com,Squirrel Cloud'
+    - 'DOMAIN,sandbox.itunes.apple.com,Squirrel Cloud'
+    - 'DOMAIN,itunes.apple.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,apps.apple.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,blobstore.apple.com,Squirrel Cloud'
+    - 'DOMAIN,cvws.icloud-content.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,mzstatic.com,DIRECT'
+    - 'DOMAIN-SUFFIX,itunes.apple.com,DIRECT'
+    - 'DOMAIN-SUFFIX,icloud.com,DIRECT'
+    - 'DOMAIN-SUFFIX,icloud-content.com,DIRECT'
+    - 'DOMAIN-SUFFIX,me.com,DIRECT'
+    - 'DOMAIN-SUFFIX,aaplimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,cdn20.com,DIRECT'
+    - 'DOMAIN-SUFFIX,cdn-apple.com,DIRECT'
+    - 'DOMAIN-SUFFIX,akadns.net,DIRECT'
+    - 'DOMAIN-SUFFIX,akamaiedge.net,DIRECT'
+    - 'DOMAIN-SUFFIX,edgekey.net,DIRECT'
+    - 'DOMAIN-SUFFIX,mwcloudcdn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,mwcname.com,DIRECT'
+    - 'DOMAIN-SUFFIX,apple.com,DIRECT'
+    - 'DOMAIN-SUFFIX,apple-cloudkit.com,DIRECT'
+    - 'DOMAIN-SUFFIX,apple-mapkit.com,DIRECT'
+    - 'DOMAIN-SUFFIX,126.com,DIRECT'
+    - 'DOMAIN-SUFFIX,126.net,DIRECT'
+    - 'DOMAIN-SUFFIX,127.net,DIRECT'
+    - 'DOMAIN-SUFFIX,163.com,DIRECT'
+    - 'DOMAIN-SUFFIX,360buyimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,36kr.com,DIRECT'
+    - 'DOMAIN-SUFFIX,acfun.tv,DIRECT'
+    - 'DOMAIN-SUFFIX,air-matters.com,DIRECT'
+    - 'DOMAIN-SUFFIX,aixifan.com,DIRECT'
+    - 'DOMAIN-KEYWORD,alicdn,DIRECT'
+    - 'DOMAIN-KEYWORD,alipay,DIRECT'
+    - 'DOMAIN-KEYWORD,taobao,DIRECT'
+    - 'DOMAIN-SUFFIX,amap.com,DIRECT'
+    - 'DOMAIN-SUFFIX,autonavi.com,DIRECT'
+    - 'DOMAIN-KEYWORD,baidu,DIRECT'
+    - 'DOMAIN-SUFFIX,bdimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,bdstatic.com,DIRECT'
+    - 'DOMAIN-SUFFIX,bilibili.com,DIRECT'
+    - 'DOMAIN-SUFFIX,bilivideo.com,DIRECT'
+    - 'DOMAIN-SUFFIX,caiyunapp.com,DIRECT'
+    - 'DOMAIN-SUFFIX,clouddn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,cnbeta.com,DIRECT'
+    - 'DOMAIN-SUFFIX,cnbetacdn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,cootekservice.com,DIRECT'
+    - 'DOMAIN-SUFFIX,csdn.net,DIRECT'
+    - 'DOMAIN-SUFFIX,ctrip.com,DIRECT'
+    - 'DOMAIN-SUFFIX,dgtle.com,DIRECT'
+    - 'DOMAIN-SUFFIX,dianping.com,DIRECT'
+    - 'DOMAIN-SUFFIX,douban.com,DIRECT'
+    - 'DOMAIN-SUFFIX,doubanio.com,DIRECT'
+    - 'DOMAIN-SUFFIX,duokan.com,DIRECT'
+    - 'DOMAIN-SUFFIX,easou.com,DIRECT'
+    - 'DOMAIN-SUFFIX,ele.me,DIRECT'
+    - 'DOMAIN-SUFFIX,feng.com,DIRECT'
+    - 'DOMAIN-SUFFIX,fir.im,DIRECT'
+    - 'DOMAIN-SUFFIX,frdic.com,DIRECT'
+    - 'DOMAIN-SUFFIX,g-cores.com,DIRECT'
+    - 'DOMAIN-SUFFIX,godic.net,DIRECT'
+    - 'DOMAIN-SUFFIX,gtimg.com,DIRECT'
+    - 'DOMAIN,cdn.hockeyapp.net,DIRECT'
+    - 'DOMAIN-SUFFIX,hongxiu.com,DIRECT'
+    - 'DOMAIN-SUFFIX,hxcdn.net,DIRECT'
+    - 'DOMAIN-SUFFIX,iciba.com,DIRECT'
+    - 'DOMAIN-SUFFIX,ifeng.com,DIRECT'
+    - 'DOMAIN-SUFFIX,ifengimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,ipip.net,DIRECT'
+    - 'DOMAIN-SUFFIX,iqiyi.com,DIRECT'
+    - 'DOMAIN-SUFFIX,jd.com,DIRECT'
+    - 'DOMAIN-SUFFIX,jianshu.com,DIRECT'
+    - 'DOMAIN-SUFFIX,knewone.com,DIRECT'
+    - 'DOMAIN-SUFFIX,le.com,DIRECT'
+    - 'DOMAIN-SUFFIX,lecloud.com,DIRECT'
+    - 'DOMAIN-SUFFIX,lemicp.com,DIRECT'
+    - 'DOMAIN-SUFFIX,licdn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,luoo.net,DIRECT'
+    - 'DOMAIN-SUFFIX,meituan.com,DIRECT'
+    - 'DOMAIN-SUFFIX,meituan.net,DIRECT'
+    - 'DOMAIN-SUFFIX,mi.com,DIRECT'
+    - 'DOMAIN-SUFFIX,miaopai.com,DIRECT'
+    - 'DOMAIN-SUFFIX,microsoft.com,DIRECT'
+    - 'DOMAIN-SUFFIX,microsoftonline.com,DIRECT'
+    - 'DOMAIN-SUFFIX,miui.com,DIRECT'
+    - 'DOMAIN-SUFFIX,miwifi.com,DIRECT'
+    - 'DOMAIN-SUFFIX,mob.com,DIRECT'
+    - 'DOMAIN-SUFFIX,netease.com,DIRECT'
+    - 'DOMAIN-SUFFIX,office.com,DIRECT'
+    - 'DOMAIN-SUFFIX,office365.com,DIRECT'
+    - 'DOMAIN-KEYWORD,officecdn,DIRECT'
+    - 'DOMAIN-SUFFIX,oschina.net,DIRECT'
+    - 'DOMAIN-SUFFIX,ppsimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,pstatp.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qcloud.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qdaily.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qdmm.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qhimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qhres.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qidian.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qihucdn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qiniu.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qiniucdn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qiyipic.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qq.com,DIRECT'
+    - 'DOMAIN-SUFFIX,qqurl.com,DIRECT'
+    - 'DOMAIN-SUFFIX,rarbg.to,DIRECT'
+    - 'DOMAIN-SUFFIX,ruguoapp.com,DIRECT'
+    - 'DOMAIN-SUFFIX,segmentfault.com,DIRECT'
+    - 'DOMAIN-SUFFIX,sinaapp.com,DIRECT'
+    - 'DOMAIN-SUFFIX,smzdm.com,DIRECT'
+    - 'DOMAIN-SUFFIX,snapdrop.net,DIRECT'
+    - 'DOMAIN-SUFFIX,sogou.com,DIRECT'
+    - 'DOMAIN-SUFFIX,sogoucdn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,sohu.com,DIRECT'
+    - 'DOMAIN-SUFFIX,soku.com,DIRECT'
+    - 'DOMAIN-SUFFIX,speedtest.net,DIRECT'
+    - 'DOMAIN-SUFFIX,sspai.com,DIRECT'
+    - 'DOMAIN-SUFFIX,suning.com,DIRECT'
+    - 'DOMAIN-SUFFIX,taobao.com,DIRECT'
+    - 'DOMAIN-SUFFIX,tencent.com,DIRECT'
+    - 'DOMAIN-SUFFIX,tenpay.com,DIRECT'
+    - 'DOMAIN-SUFFIX,tianyancha.com,DIRECT'
+    - 'DOMAIN-SUFFIX,tmall.com,DIRECT'
+    - 'DOMAIN-SUFFIX,tudou.com,DIRECT'
+    - 'DOMAIN-SUFFIX,umetrip.com,DIRECT'
+    - 'DOMAIN-SUFFIX,upaiyun.com,DIRECT'
+    - 'DOMAIN-SUFFIX,upyun.com,DIRECT'
+    - 'DOMAIN-SUFFIX,veryzhun.com,DIRECT'
+    - 'DOMAIN-SUFFIX,weather.com,DIRECT'
+    - 'DOMAIN-SUFFIX,weibo.com,DIRECT'
+    - 'DOMAIN-SUFFIX,xiami.com,DIRECT'
+    - 'DOMAIN-SUFFIX,xiami.net,DIRECT'
+    - 'DOMAIN-SUFFIX,xiaomicp.com,DIRECT'
+    - 'DOMAIN-SUFFIX,ximalaya.com,DIRECT'
+    - 'DOMAIN-SUFFIX,xmcdn.com,DIRECT'
+    - 'DOMAIN-SUFFIX,xunlei.com,DIRECT'
+    - 'DOMAIN-SUFFIX,yhd.com,DIRECT'
+    - 'DOMAIN-SUFFIX,yihaodianimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,yinxiang.com,DIRECT'
+    - 'DOMAIN-SUFFIX,ykimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,youdao.com,DIRECT'
+    - 'DOMAIN-SUFFIX,youku.com,DIRECT'
+    - 'DOMAIN-SUFFIX,zealer.com,DIRECT'
+    - 'DOMAIN-SUFFIX,zhihu.com,DIRECT'
+    - 'DOMAIN-SUFFIX,zhimg.com,DIRECT'
+    - 'DOMAIN-SUFFIX,zimuzu.tv,DIRECT'
+    - 'DOMAIN-SUFFIX,zoho.com,DIRECT'
+    - 'DOMAIN-KEYWORD,amazon,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,google,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,gmail,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,youtube,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,facebook,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,fb.me,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,fbcdn.net,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,twitter,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,instagram,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,dropbox,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,twimg.com,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,blogspot,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,youtu.be,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,whatsapp,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,admarvel,REJECT'
+    - 'DOMAIN-KEYWORD,admaster,REJECT'
+    - 'DOMAIN-KEYWORD,adsage,REJECT'
+    - 'DOMAIN-KEYWORD,adsmogo,REJECT'
+    - 'DOMAIN-KEYWORD,adsrvmedia,REJECT'
+    - 'DOMAIN-KEYWORD,adwords,REJECT'
+    - 'DOMAIN-KEYWORD,adservice,REJECT'
+    - 'DOMAIN-SUFFIX,appsflyer.com,REJECT'
+    - 'DOMAIN-KEYWORD,domob,REJECT'
+    - 'DOMAIN-SUFFIX,doubleclick.net,REJECT'
+    - 'DOMAIN-KEYWORD,duomeng,REJECT'
+    - 'DOMAIN-KEYWORD,dwtrack,REJECT'
+    - 'DOMAIN-KEYWORD,guanggao,REJECT'
+    - 'DOMAIN-KEYWORD,lianmeng,REJECT'
+    - 'DOMAIN-SUFFIX,mmstat.com,REJECT'
+    - 'DOMAIN-KEYWORD,mopub,REJECT'
+    - 'DOMAIN-KEYWORD,omgmta,REJECT'
+    - 'DOMAIN-KEYWORD,openx,REJECT'
+    - 'DOMAIN-KEYWORD,partnerad,REJECT'
+    - 'DOMAIN-KEYWORD,pingfore,REJECT'
+    - 'DOMAIN-KEYWORD,supersonicads,REJECT'
+    - 'DOMAIN-KEYWORD,uedas,REJECT'
+    - 'DOMAIN-KEYWORD,umeng,REJECT'
+    - 'DOMAIN-KEYWORD,usage,REJECT'
+    - 'DOMAIN-SUFFIX,vungle.com,REJECT'
+    - 'DOMAIN-KEYWORD,wlmonitor,REJECT'
+    - 'DOMAIN-KEYWORD,zjtoolbar,REJECT'
+    - 'DOMAIN-SUFFIX,9to5mac.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,abpchina.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,adblockplus.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,adobe.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,akamaized.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,alfredapp.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,amplitude.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ampproject.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,android.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,angularjs.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,aolcdn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,apkpure.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,appledaily.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,appshopper.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,appspot.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,arcgis.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,archive.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,armorgames.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,aspnetcdn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,att.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,awsstatic.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,azureedge.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,azurewebsites.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bing.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bintray.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bit.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bit.ly,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bitbucket.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bjango.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bkrtx.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,blog.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,blogcdn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,blogger.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,blogsmithmedia.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,blogspot.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,blogspot.hk,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,bloomberg.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,box.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,box.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cachefly.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,chromium.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cl.ly,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cloudflare.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cloudfront.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cloudmagic.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cmail19.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cnet.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,cocoapods.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,comodoca.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,crashlytics.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,culturedcode.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,d.pr,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,danilo.to,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,dayone.me,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,db.tt,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,deskconnect.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,disq.us,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,disqus.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,disquscdn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,dnsimple.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,docker.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,dribbble.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,droplr.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,duckduckgo.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,dueapp.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,dytt8.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,edgecastcdn.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,edgekey.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,edgesuite.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,engadget.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,entrust.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,eurekavpt.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,evernote.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,fabric.io,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,fast.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,fastly.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,fc2.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,feedburner.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,feedly.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,feedsportal.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,fiftythree.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,firebaseio.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,flexibits.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,flickr.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,flipboard.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,g.co,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,gabia.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,geni.us,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,gfx.ms,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ggpht.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ghostnoteapp.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,git.io,Squirrel Cloud'
+    - 'DOMAIN-KEYWORD,github,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,globalsign.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,gmodules.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,godaddy.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,golang.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,gongm.in,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,goo.gl,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,goodreaders.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,goodreads.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,gravatar.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,gstatic.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,gvt0.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,hockeyapp.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,hotmail.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,icons8.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ifixit.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ift.tt,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ifttt.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,iherb.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,imageshack.us,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,img.ly,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,imgur.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,imore.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,instapaper.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ipn.li,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,is.gd,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,issuu.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,itgonglun.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,itun.es,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ixquick.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,j.mp,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,js.revsci.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,jshint.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,jtvnw.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,justgetflux.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,kat.cr,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,klip.me,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,libsyn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,linkedin.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,line-apps.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,linode.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,lithium.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,littlehj.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,live.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,live.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,livefilestore.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,llnwd.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,macid.co,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,macromedia.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,macrumors.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,mashable.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,mathjax.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,medium.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,mega.co.nz,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,mega.nz,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,megaupload.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,microsofttranslator.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,mindnode.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,mobile01.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,modmyi.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,msedge.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,myfontastic.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,name.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,nextmedia.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,nsstatic.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,nssurge.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,nyt.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,nytimes.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,omnigroup.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,onedrive.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,onenote.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ooyala.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,openvpn.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,openwrt.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,orkut.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,osxdaily.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,outlook.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ow.ly,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,paddleapi.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,parallels.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,parse.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,pdfexpert.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,periscope.tv,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,pinboard.in,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,pinterest.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,pixelmator.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,pixiv.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,playpcesor.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,playstation.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,playstation.com.hk,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,playstation.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,playstationnetwork.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,pushwoosh.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,rime.im,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,servebom.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,sfx.ms,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,shadowsocks.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,sharethis.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,shazam.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,skype.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,smartdnsSquirrel Cloud.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,smartmailcloud.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,sndcdn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,sony.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,soundcloud.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,sourceforge.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,spotify.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,squarespace.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,sstatic.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,st.luluku.pw,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,stackoverflow.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,startpage.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,staticflickr.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,steamcommunity.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,symauth.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,symcb.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,symcd.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tapbots.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tapbots.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tdesktop.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,techcrunch.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,techsmith.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,thepiratebay.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,theverge.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,time.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,timeinc.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tiny.cc,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tinypic.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tmblr.co,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,todoist.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,trello.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,trustasiassl.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tumblr.co,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tumblr.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tweetdeck.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,tweetmarker.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,twitch.tv,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,txmblr.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,typekit.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ubertags.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ublock.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ubnt.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ulyssesapp.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,urchin.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,usertrust.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,v.gd,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,v2ex.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,vimeo.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,vimeocdn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,vine.co,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,vivaldi.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,vox-cdn.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,vsco.co,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,vultr.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,w.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,w3schools.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,webtype.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wikiwand.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wikileaks.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wikimedia.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wikipedia.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wikipedia.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,windows.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,windows.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wire.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wordpress.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,workflowy.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wp.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wsj.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,wsj.net,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,xda-developers.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,xeeno.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,xiti.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,yahoo.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,yimg.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ying.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,yoyo.org,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,ytimg.com,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,telegra.ph,Squirrel Cloud'
+    - 'DOMAIN-SUFFIX,telegram.org,Squirrel Cloud'
+    - 'IP-CIDR,91.108.4.0/22,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,91.108.8.0/21,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,91.108.16.0/22,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,91.108.56.0/22,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,149.154.160.0/20,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR6,2001:67c:4e8::/48,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR6,2001:b28:f23d::/48,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR6,2001:b28:f23f::/48,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,120.232.181.162/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,120.241.147.226/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,120.253.253.226/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,120.253.255.162/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,120.253.255.34/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,120.253.255.98/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,180.163.150.162/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,180.163.150.34/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,180.163.151.162/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,180.163.151.34/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,203.208.39.0/24,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,203.208.40.0/24,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,203.208.41.0/24,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,203.208.43.0/24,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,203.208.50.0/24,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,220.181.174.162/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,220.181.174.226/32,Squirrel Cloud,no-resolve'
+    - 'IP-CIDR,220.181.174.34/32,Squirrel Cloud,no-resolve'
+    - 'DOMAIN,injections.adguard.org,DIRECT'
+    - 'DOMAIN,local.adguard.org,DIRECT'
+    - 'DOMAIN-SUFFIX,local,DIRECT'
+    - 'IP-CIDR,127.0.0.0/8,DIRECT'
+    - 'IP-CIDR,172.16.0.0/12,DIRECT'
+    - 'IP-CIDR,192.168.0.0/16,DIRECT'
+    - 'IP-CIDR,10.0.0.0/8,DIRECT'
+    - 'IP-CIDR,17.0.0.0/8,DIRECT'
+    - 'IP-CIDR,100.64.0.0/10,DIRECT'
+    - 'IP-CIDR,224.0.0.0/4,DIRECT'
+    - 'IP-CIDR6,fe80::/10,DIRECT'
+    - 'DOMAIN-SUFFIX,cn,DIRECT'
+    - 'DOMAIN-KEYWORD,-cn,DIRECT'
+    - 'GEOIP,CN,DIRECT'
+    - 'MATCH,Squirrel Cloud'
