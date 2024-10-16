@@ -25,9 +25,16 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 300
 proxy-groups:
-    - { name: Squirrel Cloud, type: select, proxies: [自动选择, 故障转移, '剩余流量：99894.33 GB', 套餐到期：长期有效, 🇭🇰香港-腾讯BGP-DMIT, 🇭🇰香港-HyperCU-DMIT, 🇭🇰香港-HyperCT-DMIT, 🇭🇰香港-唯云BGP-DMIT, 🇭🇰香港-腾讯BGP-BageVM, 🇭🇰香港-唯云BGP-BageVM, 🇭🇰香港-腾讯BGP-HKT, 🇭🇰香港-唯云BGP-HKT, 🇨🇳台湾-腾讯BGP-Hinet, 🇸🇬狮城-腾讯BGP-BageVM, 🇯🇵日本-苏日BGP-BageVM, 🇩🇪德国-腾讯BGP-BageVM, 🇬🇧英国-腾讯BGP-BageVM, 🇺🇸美国-腾讯BGP-BageVM] }
-    - { name: 自动选择, type: url-test, proxies: ['剩余流量：99894.33 GB', 套餐到期：长期有效, 🇭🇰香港-腾讯BGP-DMIT, 🇭🇰香港-HyperCU-DMIT, 🇭🇰香港-HyperCT-DMIT, 🇭🇰香港-唯云BGP-DMIT, 🇭🇰香港-腾讯BGP-BageVM, 🇭🇰香港-唯云BGP-BageVM, 🇭🇰香港-腾讯BGP-HKT, 🇭🇰香港-唯云BGP-HKT, 🇨🇳台湾-腾讯BGP-Hinet, 🇸🇬狮城-腾讯BGP-BageVM, 🇯🇵日本-苏日BGP-BageVM, 🇩🇪德国-腾讯BGP-BageVM, 🇬🇧英国-腾讯BGP-BageVM, 🇺🇸美国-腾讯BGP-BageVM], url: 'http://www.gstatic.com/generate_204', interval: 86400 }
-    - { name: 故障转移, type: fallback, proxies: ['剩余流量：99894.33 GB', 套餐到期：长期有效, 🇭🇰香港-腾讯BGP-DMIT, 🇭🇰香港-HyperCU-DMIT, 🇭🇰香港-HyperCT-DMIT, 🇭🇰香港-唯云BGP-DMIT, 🇭🇰香港-腾讯BGP-BageVM, 🇭🇰香港-唯云BGP-BageVM, 🇭🇰香港-腾讯BGP-HKT, 🇭🇰香港-唯云BGP-HKT, 🇨🇳台湾-腾讯BGP-Hinet, 🇸🇬狮城-腾讯BGP-BageVM, 🇯🇵日本-苏日BGP-BageVM, 🇩🇪德国-腾讯BGP-BageVM, 🇬🇧英国-腾讯BGP-BageVM, 🇺🇸美国-腾讯BGP-BageVM], url: 'http://www.gstatic.com/generate_204', interval: 7200 }
+    - { name: Squirrel Cloud, type: select, proxies: [自动选择, 故障转移, 香港节点, 日本节点, 台湾节点, 美国节点, 狮城节点] }
+    - { name: 自动选择, type: url-test, proxies: [香港节点, 日本节点, 台湾节点, 美国节点, 狮城节点], url: 'http://www.gstatic.com/generate_204', interval: 86400 }
+    - { name: 故障转移, type: fallback, proxies: [香港节点, 日本节点, 台湾节点, 美国节点, 狮城节点], url: 'http://www.gstatic.com/generate_204', interval: 7200 }
+
+ # 节点分组
+  - {name: 香港节点, <<: *a4, filter: "香港|HK|(?i)Hong", icon: https://hoofei.com/clash/Icons/HK.png}
+  - {name: 日本节点, <<: *a4, filter: "日本|东京|JP|(?i)Japan", icon: https://hoofei.com/clash/Icons/JP.png}
+  - {name: 台湾节点, <<: *a4, filter: "台湾|TW|(?i)Taiwan", icon: https://hoofei.com/clash/Icons/TW.png}
+  - {name: 美国节点, <<: *a4, filter: "美国|美西|美东|洛杉矶|US|(?i)States|American", icon: https://hoofei.com/clash/Icons/US.png}
+  - {name: 狮城节点, <<: *a4, filter: "新加坡|狮城|SG|(?i)Singapore", icon: https://hoofei.com/clash/Icons/SG.png}
 rules:
     - 'IP-CIDR,42.157.161.191/32,DIRECT,no-resolve'
     - 'IP-CIDR,211.99.100.249/32,DIRECT,no-resolve'
