@@ -14,17 +14,11 @@ dns:
     - 8.8.4.4
     - tls://1.0.0.1:853
     - tls://dns.google:853
-proxies:
-  - {name: 🇭🇰 香港-莞港IPLC-HGC, server: gg.nat.yesclouds.com, port: 10069, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇭🇰 香港-莞港IPLC-HKT, server: gg.nat.yesclouds.com, port: 10058, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇭🇰 香港- 广港IEPL-HKBN, server: 120.233.206.28, port: 27145, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇭🇰 台湾-莞港IPLC-Hinet, server: gg.nat.yesclouds.com, port: 10110, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇭🇰 台湾-广港IEPL-Hinet, server: 120.233.206.29, port: 10801, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇸🇬 新加坡-广新隧道-BestVM, server: mm-gzdxaa.la-chinata.hk, port: 51334, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇯🇵 日本-沪日隧道-BestVM, server: shcua.donghui.tech, port: 63715, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇯🇵 日本-沪日IEPL-BestVM, server: 112.29.200.111, port: 26365, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇺🇸 美国-沪美隧道-斯巴达, server: shdx.kd69.vip, port: 58048, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
-  - {name: 🇺🇸 美国-沪美隧道-Crunchbits, server: shdx.kd69.vip, port: 52900, client-fingerprint: chrome, type: ss, cipher: aes-256-gcm, password: 8cd1a4c3-90f6-471a-90f6-a986fedf949d, tfo: false}
+proxy-providers:
+  Subscribe:
+    <<: *a1
+    url: https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f # 你的节点订阅地址
+    path: ./proxy_providers/Airport.yaml
 proxy-groups:
   - name: 🚀 节点选择
     type: select
