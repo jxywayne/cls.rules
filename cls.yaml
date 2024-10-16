@@ -91,7 +91,7 @@ proxy-groups:
   - {name: 手动选择, <<: *a2, icon: https://hoofei.com/clash/Icons/Manual.png }
   - {name: 全球网络, <<: *a3, icon: https://hoofei.com/clash/Icons/Proxy.png}
   - {name: 漏网之鱼, <<: *a3, icon: https://hoofei.com/clash/Icons/Match.png}
-  - {name: OpenAI, type: select, proxies: [家宽节点], icon: https://hoofei.com/clash/Icons/OpenAI.png }
+  - {name: OpenAI, type: select, proxies: [家宽节点][美国节点], icon: https://hoofei.com/clash/Icons/OpenAI.png }
   - {name: Claude, type: select, proxies: [家宽节点], icon: https://hoofei.com/clash/Icons/Claude.png }
   - {name: Crypto, type: select, proxies: [狮城节点], icon: https://hoofei.com/clash/Icons/Crypto.png }
   - {name: Binance, type: select, proxies: [狮城节点], icon: https://hoofei.com/clash/Icons/Binance.png }
