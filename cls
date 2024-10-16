@@ -1,7 +1,9 @@
 #==========================================
 # @ConfigName        自用 Clash 配置文件
-# @Author            @松鼠哥
-# @UpdateTime        2024年10月16日 06:00
+# @Author            @hoofei
+# @UpdateTime        2024年10月14日 06:00
+# @Function          支持手动选择、自动测速、广告屏蔽、兜底分流、按国家分组节点、多机场订阅等等
+# @ConfigVersion     1.1.2
 #==========================================
 
 port: 7890 # HTTP(S) 代理服务器端口
@@ -80,7 +82,7 @@ proxy-providers:
   Subscribe:
     <<: *a1
     url: https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f # 你的节点订阅地址
-    path: ./proxy_providers/SquirrelCloud.yaml
+    path: ./proxy_providers/Airport.yaml
     
 proxies: null
 proxy-groups:
