@@ -121,6 +121,7 @@ rules:
 # 分流
   - RULE-SET,Direct,DIRECT
   - RULE-SET,Advertising,REJECT
+  - GEOIP,CN,DIRECT
   - RULE-SET,YouTube,YouTube
   - RULE-SET,OpenAI,OpenAI
   - RULE-SET,GitHub,GitHub
@@ -128,5 +129,4 @@ rules:
   - RULE-SET,Telegram,Telegram
   - RULE-SET,ChinaIP,DIRECT
   - RULE-SET,Proxy,全球网络
-  - GEOIP,CN,DIRECT
   - MATCH,漏网之鱼
