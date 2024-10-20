@@ -103,8 +103,6 @@ proxy-groups:
   - {name: 德国节点, <<: *a4, filter: "德国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/DE%403x.png}
   
 rules:
-  # 分流-国内流量
-  - GEOIP,CN,DIRECT
 # 分流-Google
   - DOMAIN-KEYWORD,youtube,Google
   - DOMAIN-KEYWORD,googlevideo,Google
@@ -118,6 +116,8 @@ rules:
   - DOMAIN-KEYWORD,telegram,Telegram
   - DOMAIN-KEYWORD,nicegram,Telegram
   - GEOIP,telegram,Telegram
+  # 分流-国内流量
+  - GEOIP,CN,DIRECT
 # 分流-PT站
   - DOMAIN-KEYWORD,lemonhd,PrivateTracker
   - DOMAIN-KEYWORD,52pt,PrivateTracker
