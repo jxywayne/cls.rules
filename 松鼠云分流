@@ -111,10 +111,10 @@ rule-providers:
   
 rules:
 # 分流-Google
-  - DOMAIN-KEYWORD,youtube,Youtube
-  - DOMAIN-KEYWORD,googlevideo,Youtube
-  - DOMAIN-KEYWORD,ytimg,Youtube
-  - DOMAIN-KEYWORD,google,Youtube
+  - DOMAIN-KEYWORD,youtube,Google
+  - DOMAIN-KEYWORD,googlevideo,Google
+  - DOMAIN-KEYWORD,ytimg,Google
+  - DOMAIN-KEYWORD,google,Google
 # 分流-OpenAI
   - DOMAIN-KEYWORD,chatgpt,OpenAI
   - DOMAIN-KEYWORD,openai,OpenAI
