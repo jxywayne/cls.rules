@@ -113,14 +113,6 @@ rules:
 # 分流-国内流量
   - RULE-SET,ChinaIP,DIRECT
   - GEOIP,CN,DIRECT
-# 分流-Google
-  - DOMAIN-KEYWORD,appspot,Google
-  - DOMAIN-KEYWORD,blogspot,Google
-  - DOMAIN-KEYWORD,gmail,Google
-  - DOMAIN-KEYWORD,google,Google
-  - DOMAIN-KEYWORD,recaptcha,Google
-  - DOMAIN-SUFFIX,google.com,Google
-  - DOMAIN-SUFFIX,google.com.hk,Google
 # 分流-Youtube
   - DOMAIN-SUFFIX,ggpht.cn,Youtube
   - DOMAIN-SUFFIX,ggpht.com,Youtube
