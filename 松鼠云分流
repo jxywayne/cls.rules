@@ -87,7 +87,7 @@ proxy-groups:
   # 分流分组
   - {name: 自动选择, <<: *a4, icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/auto.png}
   - {name: 手动选择, <<: *a2, icon: https://hoofei.com/clash/Icons/Manual.png }
-  - {name: YouTube, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/youtube.png }
+  - {name: Youtube, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/youtube.png }
   - {name: Google, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
   - {name: OpenAI, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
   - {name: Telegram, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
@@ -106,20 +106,255 @@ proxy-groups:
 
 rule-providers:
   Direct: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml, path: ./ruleset/Direct.yaml}
-  OpenAI: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml, path: ./ruleset/OpenAI.yaml}
   Google: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml, path: ./ruleset/Google.yaml}
-  Telegram: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml, path: ./ruleset/Telegram.yaml}
-  YouTube: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml, path: ./ruleset/YouTube.yaml}
   Lan: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Lan/Lan.yaml, path: ./ruleset/Lan.yaml}
   ChinaIP: {<<: *a7, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaIPs/ChinaIPs_IP.yaml, path: ./ruleset/ChinaIPs_IP.yaml}
   Proxy: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global.yaml, path: ./ruleset/Global.yaml}
   
 rules:
-# 分流
-  - RULE-SET,YouTube,YouTube
+# 分流-Youtube
+  - DOMAIN-SUFFIX,ggpht.cn,Youtube
+  - DOMAIN-SUFFIX,ggpht.com,Youtube
+  - DOMAIN-SUFFIX,googlevideo.com,Youtube
+  - DOMAIN-SUFFIX,gvt1.com,Youtube
+  - DOMAIN-SUFFIX,gvt2.com,Youtube
+  - DOMAIN-SUFFIX,video.google.com,Youtube
+  - DOMAIN-SUFFIX,wide-youtube.l.google.com,Youtube
+  - DOMAIN-SUFFIX,withyoutube.com,Youtube
+  - DOMAIN-SUFFIX,youtu.be,Youtube
+  - DOMAIN-SUFFIX,youtube,Youtube
+  - DOMAIN-SUFFIX,youtube-nocookie.com,Youtube
+  - DOMAIN-SUFFIX,youtube-ui.l.google.com,Youtube
+  - DOMAIN-SUFFIX,youtube.ae,Youtube
+  - DOMAIN-SUFFIX,youtube.al,Youtube
+  - DOMAIN-SUFFIX,youtube.am,Youtube
+  - DOMAIN-SUFFIX,youtube.at,Youtube
+  - DOMAIN-SUFFIX,youtube.az,Youtube
+  - DOMAIN-SUFFIX,youtube.ba,Youtube
+  - DOMAIN-SUFFIX,youtube.be,Youtube
+  - DOMAIN-SUFFIX,youtube.bg,Youtube
+  - DOMAIN-SUFFIX,youtube.bh,Youtube
+  - DOMAIN-SUFFIX,youtube.bo,Youtube
+  - DOMAIN-SUFFIX,youtube.by,Youtube
+  - DOMAIN-SUFFIX,youtube.ca,Youtube
+  - DOMAIN-SUFFIX,youtube.cat,Youtube
+  - DOMAIN-SUFFIX,youtube.ch,Youtube
+  - DOMAIN-SUFFIX,youtube.cl,Youtube
+  - DOMAIN-SUFFIX,youtube.co,Youtube
+  - DOMAIN-SUFFIX,youtube.co.ae,Youtube
+  - DOMAIN-SUFFIX,youtube.co.at,Youtube
+  - DOMAIN-SUFFIX,youtube.co.cr,Youtube
+  - DOMAIN-SUFFIX,youtube.co.hu,Youtube
+  - DOMAIN-SUFFIX,youtube.co.id,Youtube
+  - DOMAIN-SUFFIX,youtube.co.il,Youtube
+  - DOMAIN-SUFFIX,youtube.co.in,Youtube
+  - DOMAIN-SUFFIX,youtube.co.jp,Youtube
+  - DOMAIN-SUFFIX,youtube.co.ke,Youtube
+  - DOMAIN-SUFFIX,youtube.co.kr,Youtube
+  - DOMAIN-SUFFIX,youtube.co.ma,Youtube
+  - DOMAIN-SUFFIX,youtube.co.nz,Youtube
+  - DOMAIN-SUFFIX,youtube.co.th,Youtube
+  - DOMAIN-SUFFIX,youtube.co.tz,Youtube
+  - DOMAIN-SUFFIX,youtube.co.ug,Youtube
+  - DOMAIN-SUFFIX,youtube.co.uk,Youtube
+  - DOMAIN-SUFFIX,youtube.co.ve,Youtube
+  - DOMAIN-SUFFIX,youtube.co.za,Youtube
+  - DOMAIN-SUFFIX,youtube.co.zw,Youtube
+  - DOMAIN-SUFFIX,youtube.com,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ar,Youtube
+  - DOMAIN-SUFFIX,youtube.com.au,Youtube
+  - DOMAIN-SUFFIX,youtube.com.az,Youtube
+  - DOMAIN-SUFFIX,youtube.com.bd,Youtube
+  - DOMAIN-SUFFIX,youtube.com.bh,Youtube
+  - DOMAIN-SUFFIX,youtube.com.bo,Youtube
+  - DOMAIN-SUFFIX,youtube.com.br,Youtube
+  - DOMAIN-SUFFIX,youtube.com.by,Youtube
+  - DOMAIN-SUFFIX,youtube.com.co,Youtube
+  - DOMAIN-SUFFIX,youtube.com.do,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ec,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ee,Youtube
+  - DOMAIN-SUFFIX,youtube.com.eg,Youtube
+  - DOMAIN-SUFFIX,youtube.com.es,Youtube
+  - DOMAIN-SUFFIX,youtube.com.gh,Youtube
+  - DOMAIN-SUFFIX,youtube.com.gr,Youtube
+  - DOMAIN-SUFFIX,youtube.com.gt,Youtube
+  - DOMAIN-SUFFIX,youtube.com.hk,Youtube
+  - DOMAIN-SUFFIX,youtube.com.hn,Youtube
+  - DOMAIN-SUFFIX,youtube.com.hr,Youtube
+  - DOMAIN-SUFFIX,youtube.com.jm,Youtube
+  - DOMAIN-SUFFIX,youtube.com.jo,Youtube
+  - DOMAIN-SUFFIX,youtube.com.kw,Youtube
+  - DOMAIN-SUFFIX,youtube.com.lb,Youtube
+  - DOMAIN-SUFFIX,youtube.com.lv,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ly,Youtube
+  - DOMAIN-SUFFIX,youtube.com.mk,Youtube
+  - DOMAIN-SUFFIX,youtube.com.mt,Youtube
+  - DOMAIN-SUFFIX,youtube.com.mx,Youtube
+  - DOMAIN-SUFFIX,youtube.com.my,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ng,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ni,Youtube
+  - DOMAIN-SUFFIX,youtube.com.om,Youtube
+  - DOMAIN-SUFFIX,youtube.com.pa,Youtube
+  - DOMAIN-SUFFIX,youtube.com.pe,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ph,Youtube
+  - DOMAIN-SUFFIX,youtube.com.pk,Youtube
+  - DOMAIN-SUFFIX,youtube.com.pt,Youtube
+  - DOMAIN-SUFFIX,youtube.com.py,Youtube
+  - DOMAIN-SUFFIX,youtube.com.qa,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ro,Youtube
+  - DOMAIN-SUFFIX,youtube.com.sa,Youtube
+  - DOMAIN-SUFFIX,youtube.com.sg,Youtube
+  - DOMAIN-SUFFIX,youtube.com.sv,Youtube
+  - DOMAIN-SUFFIX,youtube.com.tn,Youtube
+  - DOMAIN-SUFFIX,youtube.com.tr,Youtube
+  - DOMAIN-SUFFIX,youtube.com.tw,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ua,Youtube
+  - DOMAIN-SUFFIX,youtube.com.uy,Youtube
+  - DOMAIN-SUFFIX,youtube.com.ve,Youtube
+  - DOMAIN-SUFFIX,youtube.cr,Youtube
+  - DOMAIN-SUFFIX,youtube.cz,Youtube
+  - DOMAIN-SUFFIX,youtube.de,Youtube
+  - DOMAIN-SUFFIX,youtube.dk,Youtube
+  - DOMAIN-SUFFIX,youtube.ee,Youtube
+  - DOMAIN-SUFFIX,youtube.es,Youtube
+  - DOMAIN-SUFFIX,youtube.fi,Youtube
+  - DOMAIN-SUFFIX,youtube.fr,Youtube
+  - DOMAIN-SUFFIX,youtube.ge,Youtube
+  - DOMAIN-SUFFIX,youtube.googleapis.com,Youtube
+  - DOMAIN-SUFFIX,youtube.gr,Youtube
+  - DOMAIN-SUFFIX,youtube.gt,Youtube
+  - DOMAIN-SUFFIX,youtube.hk,Youtube
+  - DOMAIN-SUFFIX,youtube.hr,Youtube
+  - DOMAIN-SUFFIX,youtube.hu,Youtube
+  - DOMAIN-SUFFIX,youtube.ie,Youtube
+  - DOMAIN-SUFFIX,youtube.in,Youtube
+  - DOMAIN-SUFFIX,youtube.iq,Youtube
+  - DOMAIN-SUFFIX,youtube.is,Youtube
+  - DOMAIN-SUFFIX,youtube.it,Youtube
+  - DOMAIN-SUFFIX,youtube.jo,Youtube
+  - DOMAIN-SUFFIX,youtube.jp,Youtube
+  - DOMAIN-SUFFIX,youtube.kr,Youtube
+  - DOMAIN-SUFFIX,youtube.kz,Youtube
+  - DOMAIN-SUFFIX,youtube.la,Youtube
+  - DOMAIN-SUFFIX,youtube.lk,Youtube
+  - DOMAIN-SUFFIX,youtube.lt,Youtube
+  - DOMAIN-SUFFIX,youtube.lu,Youtube
+  - DOMAIN-SUFFIX,youtube.lv,Youtube
+  - DOMAIN-SUFFIX,youtube.ly,Youtube
+  - DOMAIN-SUFFIX,youtube.ma,Youtube
+  - DOMAIN-SUFFIX,youtube.md,Youtube
+  - DOMAIN-SUFFIX,youtube.me,Youtube
+  - DOMAIN-SUFFIX,youtube.mk,Youtube
+  - DOMAIN-SUFFIX,youtube.mn,Youtube
+  - DOMAIN-SUFFIX,youtube.mx,Youtube
+  - DOMAIN-SUFFIX,youtube.my,Youtube
+  - DOMAIN-SUFFIX,youtube.ng,Youtube
+  - DOMAIN-SUFFIX,youtube.ni,Youtube
+  - DOMAIN-SUFFIX,youtube.nl,Youtube
+  - DOMAIN-SUFFIX,youtube.no,Youtube
+  - DOMAIN-SUFFIX,youtube.pa,Youtube
+  - DOMAIN-SUFFIX,youtube.pe,Youtube
+  - DOMAIN-SUFFIX,youtube.ph,Youtube
+  - DOMAIN-SUFFIX,youtube.pk,Youtube
+  - DOMAIN-SUFFIX,youtube.pl,Youtube
+  - DOMAIN-SUFFIX,youtube.pr,Youtube
+  - DOMAIN-SUFFIX,youtube.pt,Youtube
+  - DOMAIN-SUFFIX,youtube.qa,Youtube
+  - DOMAIN-SUFFIX,youtube.ro,Youtube
+  - DOMAIN-SUFFIX,youtube.rs,Youtube
+  - DOMAIN-SUFFIX,youtube.ru,Youtube
+  - DOMAIN-SUFFIX,youtube.sa,Youtube
+  - DOMAIN-SUFFIX,youtube.se,Youtube
+  - DOMAIN-SUFFIX,youtube.sg,Youtube
+  - DOMAIN-SUFFIX,youtube.si,Youtube
+  - DOMAIN-SUFFIX,youtube.sk,Youtube
+  - DOMAIN-SUFFIX,youtube.sn,Youtube
+  - DOMAIN-SUFFIX,youtube.soy,Youtube
+  - DOMAIN-SUFFIX,youtube.sv,Youtube
+  - DOMAIN-SUFFIX,youtube.tn,Youtube
+  - DOMAIN-SUFFIX,youtube.tv,Youtube
+  - DOMAIN-SUFFIX,youtube.ua,Youtube
+  - DOMAIN-SUFFIX,youtube.ug,Youtube
+  - DOMAIN-SUFFIX,youtube.uy,Youtube
+  - DOMAIN-SUFFIX,youtube.vn,Youtube
+  - DOMAIN-SUFFIX,youtubeeducation.com,Youtube
+  - DOMAIN-SUFFIX,youtubeembeddedplayer.googleapis.com,Youtube
+  - DOMAIN-SUFFIX,youtubefanfest.com,Youtube
+  - DOMAIN-SUFFIX,youtubegaming.com,Youtube
+  - DOMAIN-SUFFIX,youtubego.co.id,Youtube
+  - DOMAIN-SUFFIX,youtubego.co.in,Youtube
+  - DOMAIN-SUFFIX,youtubego.com,Youtube
+  - DOMAIN-SUFFIX,youtubego.com.br,Youtube
+  - DOMAIN-SUFFIX,youtubego.id,Youtube
+  - DOMAIN-SUFFIX,youtubego.in,Youtube
+  - DOMAIN-SUFFIX,youtubei.googleapis.com,Youtube
+  - DOMAIN-SUFFIX,youtubekids.com,Youtube
+  - DOMAIN-SUFFIX,youtubemobilesupport.com,Youtube
+  - DOMAIN-SUFFIX,yt.be,Youtube
+  - DOMAIN-SUFFIX,ytimg.com,Youtube
+  - DOMAIN-KEYWORD,youtube,Youtube
+# 分流-OpenAI
+  - DOMAIN,browser-intake-datadoghq.com,OpenAI
+  - DOMAIN,chat.openai.com.cdn.cloudflare.net,OpenAI
+  - DOMAIN,gemini.google.com,OpenAI
+  - DOMAIN,openai-api.arkoselabs.com,OpenAI
+  - DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net,OpenAI
+  - DOMAIN,openaicomproductionae4b.blob.core.windows.net,OpenAI
+  - DOMAIN,production-openaicom-storage.azureedge.net,OpenAI
+  - DOMAIN,static.cloudflareinsights.com,OpenAI
+  - DOMAIN-SUFFIX,ai.com,OpenAI
+  - DOMAIN-SUFFIX,algolia.net,OpenAI
+  - DOMAIN-SUFFIX,api.statsig.com,OpenAI
+  - DOMAIN-SUFFIX,auth0.com,OpenAI
+  - DOMAIN-SUFFIX,chatgpt.com,OpenAI
+  - DOMAIN-SUFFIX,chatgpt.livekit.cloud,OpenAI
+  - DOMAIN-SUFFIX,client-api.arkoselabs.com,OpenAI
+  - DOMAIN-SUFFIX,events.statsigapi.net,OpenAI
+  - DOMAIN-SUFFIX,featuregates.org,OpenAI
+  - DOMAIN-SUFFIX,host.livekit.cloud,OpenAI
+  - DOMAIN-SUFFIX,identrust.com,OpenAI
+  - DOMAIN-SUFFIX,intercom.io,OpenAI
+  - DOMAIN-SUFFIX,intercomcdn.com,OpenAI
+  - DOMAIN-SUFFIX,launchdarkly.com,OpenAI
+  - DOMAIN-SUFFIX,oaistatic.com,OpenAI
+  - DOMAIN-SUFFIX,oaiusercontent.com,OpenAI
+  - DOMAIN-SUFFIX,observeit.net,OpenAI
+  - DOMAIN-SUFFIX,openai.com,OpenAI
+  - DOMAIN-SUFFIX,openaiapi-site.azureedge.net,OpenAI
+  - DOMAIN-SUFFIX,openaicom.imgix.net,OpenAI
+  - DOMAIN-SUFFIX,segment.io,OpenAI
+  - DOMAIN-SUFFIX,sentry.io,OpenAI
+  - DOMAIN-SUFFIX,stripe.com,OpenAI
+  - DOMAIN-SUFFIX,turn.livekit.cloud,OpenAI
+  - DOMAIN-KEYWORD,openai,OpenAI
+# 分流-Telegram
+ - DOMAIN,api.imem.app,Telegram
+  - DOMAIN,api.swiftgram.app,Telegram
+  - DOMAIN-SUFFIX,cdn-telegram.org,Telegram
+  - DOMAIN-SUFFIX,comments.app,Telegram
+  - DOMAIN-SUFFIX,contest.com,Telegram
+  - DOMAIN-SUFFIX,graph.org,Telegram
+  - DOMAIN-SUFFIX,legra.ph,Telegram
+  - DOMAIN-SUFFIX,mbrx.app,Telegram
+  - DOMAIN-SUFFIX,quiz.directory,Telegram
+  - DOMAIN-SUFFIX,stel.com,Telegram
+  - DOMAIN-SUFFIX,t.me,Telegram
+  - DOMAIN-SUFFIX,tdesktop.com,Telegram
+  - DOMAIN-SUFFIX,telega.one,Telegram
+  - DOMAIN-SUFFIX,telegra.ph,Telegram
+  - DOMAIN-SUFFIX,telegram-cdn.org,Telegram
+  - DOMAIN-SUFFIX,telegram.dog,Telegram
+  - DOMAIN-SUFFIX,telegram.me,Telegram
+  - DOMAIN-SUFFIX,telegram.org,Telegram
+  - DOMAIN-SUFFIX,telegram.space,Telegram
+  - DOMAIN-SUFFIX,telegramdownload.com,Telegram
+  - DOMAIN-SUFFIX,telesco.pe,Telegram
+  - DOMAIN-SUFFIX,tg.dev,Telegram
+  - DOMAIN-SUFFIX,tx.me,Telegram
+  - DOMAIN-SUFFIX,usercontent.dev,Telegram
+  - DOMAIN-KEYWORD,nicegram,Telegram
+# 分流-其他
   - RULE-SET,Google,Google
-  - RULE-SET,Telegram,Telegram
-  - RULE-SET,OpenAI,OpenAI
   - RULE-SET,Proxy,全球网络
   - RULE-SET,ChinaIP,DIRECT
   - GEOIP,CN,DIRECT
