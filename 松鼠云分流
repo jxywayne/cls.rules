@@ -90,6 +90,7 @@ proxy-groups:
   - {name: Google, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
   - {name: OpenAI, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
   - {name: Telegram, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
+  - {name: 国外电商, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
   - {name: PrivateTracker, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/cylink.png }
   - {name: 漏网之鱼, <<: *a3, icon: https://hoofei.com/clash/Icons/Match.png}
   
@@ -115,6 +116,12 @@ rules:
   - DOMAIN-KEYWORD,telegram,Telegram
   - DOMAIN-KEYWORD,nicegram,Telegram
   - GEOIP,telegram,Telegram
+# 分流-国外电商
+  - DOMAIN-KEYWORD,allegro,国外电商
+  - DOMAIN-KEYWORD,ebay,国外电商
+  - DOMAIN-KEYWORD,amazon,国外电商
+  - DOMAIN-KEYWORD,cdiscount,国外电商
+  - DOMAIN-KEYWORD,aliexpress,国外电商
 # 分流-国内流量
   - GEOIP,CN,DIRECT
 # 分流-PT站
