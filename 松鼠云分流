@@ -90,6 +90,7 @@ proxy-groups:
   - {name: Youtube, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/youtube.png }
   - {name: OpenAI, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
   - {name: Telegram, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
+  - {name: Google, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
   - {name: 全球网络, <<: *a3, icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/global.png}
   - {name: 漏网之鱼, <<: *a3, icon: https://hoofei.com/clash/Icons/Match.png}
   
@@ -110,17 +111,19 @@ rule-providers:
   Proxy: {<<: *a6, url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global.yaml, path: ./ruleset/Global.yaml}
   
 rules:
-# 分流-国内流量
-  - RULE-SET,ChinaIP,DIRECT
-  - GEOIP,CN,DIRECT
 # 分流-Youtube
   - DOMAIN-KEYWORD,youtube,Youtube
+# 分流-Youtube
+  - DOMAIN-KEYWORD,google,Google
 # 分流-OpenAI
   - DOMAIN-KEYWORD,chatgpt,OpenAI
   - DOMAIN-KEYWORD,openai,OpenAI
 # 分流-Telegram
   - DOMAIN-KEYWORD,telegram,Telegram
   - DOMAIN-KEYWORD,nicegram,Telegram
+# 分流-国内流量
+  - RULE-SET,ChinaIP,DIRECT
+  - GEOIP,CN,DIRECT
 # 分流-其他
   - RULE-SET,Proxy,全球网络
   - MATCH,漏网之鱼
