@@ -328,7 +328,7 @@ rules:
   - DOMAIN-SUFFIX,turn.livekit.cloud,OpenAI
   - DOMAIN-KEYWORD,openai,OpenAI
 # 分流-Telegram
- - DOMAIN,api.imem.app,Telegram
+  - DOMAIN,api.imem.app,Telegram
   - DOMAIN,api.swiftgram.app,Telegram
   - DOMAIN-SUFFIX,cdn-telegram.org,Telegram
   - DOMAIN-SUFFIX,comments.app,Telegram
