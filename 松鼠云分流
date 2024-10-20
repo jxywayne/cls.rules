@@ -120,6 +120,7 @@ rules:
 # 分流-Telegram
   - DOMAIN-KEYWORD,telegram,Telegram
   - DOMAIN-KEYWORD,nicegram,Telegram
+  - GEOIP,telegram,Telegram
 # 分流-国内流量
   - RULE-SET,ChinaIP,DIRECT
   - GEOIP,CN,DIRECT
