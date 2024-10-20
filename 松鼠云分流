@@ -1,7 +1,7 @@
 #==========================================
 # @ConfigName        自用 Clash 配置文件
 # @Author            @Squirrel Cloud
-# @UpdateTime        2024年10月18日 09:00
+# @UpdateTime        2024年10月20日 09:00
 #==========================================
 
 port: 7890 # HTTP(S) 代理服务器端口
@@ -115,6 +115,7 @@ rules:
   - DOMAIN-KEYWORD,googlevideo,Google
   - DOMAIN-KEYWORD,ytimg,Google
   - DOMAIN-KEYWORD,google,Google
+  - DOMAIN-KEYWORD,ggpht,Google
 # 分流-OpenAI
   - DOMAIN-KEYWORD,chatgpt,OpenAI
   - DOMAIN-KEYWORD,openai,OpenAI
