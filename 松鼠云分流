@@ -172,8 +172,8 @@ rules:
   - DOMAIN-KEYWORD,zmpt,DIRECT
   - DOMAIN-KEYWORD,zhuque,DIRECT
   - DOMAIN-KEYWORD,hddolby,DIRECT
-  - DOMAIN-KEYWORD,announce
-  - DOMAIN-KEYWORD,torrent
+  - DOMAIN-KEYWORD,announce,DIRECT
+  - DOMAIN-KEYWORD,torrent,DIRECT
 
 # 分流-国内流量
   - GEOIP,CN,DIRECT
