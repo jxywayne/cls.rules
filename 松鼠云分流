@@ -110,6 +110,7 @@ rules:
   - DOMAIN-KEYWORD,google,Google
   - DOMAIN-KEYWORD,youtube,Google
   - DOMAIN-KEYWORD,ggpht,Google
+  - DOMAIN-KEYWORD,ytimg,Google
 # 分流-OpenAI
   - DOMAIN-KEYWORD,chatgpt,OpenAI
   - DOMAIN-KEYWORD,openai,OpenAI
