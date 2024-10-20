@@ -90,6 +90,7 @@ proxy-groups:
   - {name: Google, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
   - {name: OpenAI, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
   - {name: Telegram, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
+  - {name: PrivateTracker, type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/cylink.png }
   - {name: 漏网之鱼, <<: *a3, icon: https://hoofei.com/clash/Icons/Match.png}
   
   # 节点分组
@@ -116,65 +117,65 @@ rules:
   - DOMAIN-KEYWORD,nicegram,Telegram
   - GEOIP,telegram,Telegram
 # 分流-PT站
-  - DOMAIN-KEYWORD,lemonhd,DIRECT
-  - DOMAIN-KEYWORD,52pt,DIRECT
-  - DOMAIN-KEYWORD,audiences,DIRECT
-  - DOMAIN-KEYWORD,agsvpt,DIRECT
-  - DOMAIN-KEYWORD,btschool,DIRECT
-  - DOMAIN-KEYWORD,ptchdbits,DIRECT
-  - DOMAIN-KEYWORD,cyanbug,DIRECT
-  - DOMAIN-KEYWORD,carpt,DIRECT
-  - DOMAIN-KEYWORD,ptcafe,DIRECT
-  - DOMAIN-KEYWORD,dajiao,DIRECT
-  - DOMAIN-KEYWORD,discfan,DIRECT
-  - DOMAIN-KEYWORD,ecust,DIRECT
-  - DOMAIN-KEYWORD,0ff,DIRECT
-  - DOMAIN-KEYWORD,fsm,DIRECT
-  - DOMAIN-KEYWORD,greatposterwall,DIRECT
-  - DOMAIN-KEYWORD,hdsky,DIRECT
-  - DOMAIN-KEYWORD,hdhome,DIRECT
-  - DOMAIN-KEYWORD,hhanclub,DIRECT
-  - DOMAIN-KEYWORD,hdupt,DIRECT
-  - DOMAIN-KEYWORD,hdkyl,DIRECT
-  - DOMAIN-KEYWORD,hares,DIRECT
-  - DOMAIN-KEYWORD,hddolby,DIRECT
-  - DOMAIN-KEYWORD,hdvideo,DIRECT
-  - DOMAIN-KEYWORD,hdtime,DIRECT
-  - DOMAIN-KEYWORD,hdfans,DIRECT
-  - DOMAIN-KEYWORD,hdarea,DIRECT
-  - DOMAIN-KEYWORD,hdchina,DIRECT
-  - DOMAIN-KEYWORD,haidan,DIRECT
-  - DOMAIN-KEYWORD,icc2022,DIRECT
-  - DOMAIN-KEYWORD,ilolicon,DIRECT
-  - DOMAIN-KEYWORD,keepfrds,DIRECT
-  - DOMAIN-KEYWORD,kufei,DIRECT
-  - DOMAIN-KEYWORD,m-team,DIRECT
-  - DOMAIN-KEYWORD,monikadesign,DIRECT
-  - DOMAIN-KEYWORD,nicept,DIRECT
-  - DOMAIN-KEYWORD,ourbits,DIRECT
-  - DOMAIN-KEYWORD,oshen,DIRECT
-  - DOMAIN-KEYWORD,okpt,DIRECT
-  - DOMAIN-KEYWORD,ptvicomo,DIRECT
-  - DOMAIN-KEYWORD,pandapt,DIRECT
-  - DOMAIN-KEYWORD,pthome,DIRECT
-  - DOMAIN-KEYWORD,ptchina,DIRECT
-  - DOMAIN-KEYWORD,qingwapt,DIRECT
-  - DOMAIN-KEYWORD,leaves,DIRECT
-  - DOMAIN-KEYWORD,rousi,DIRECT
-  - DOMAIN-KEYWORD,ptsbao,DIRECT
-  - DOMAIN-KEYWORD,star-space,DIRECT
-  - DOMAIN-KEYWORD,soulvoice,DIRECT
-  - DOMAIN-KEYWORD,totheglory,DIRECT
-  - DOMAIN-KEYWORD,ubits,DIRECT
-  - DOMAIN-KEYWORD,wintersakura,DIRECT
-  - DOMAIN-KEYWORD,crabpt,DIRECT
-  - DOMAIN-KEYWORD,hdmayi,DIRECT
-  - DOMAIN-KEYWORD,zmpt,DIRECT
-  - DOMAIN-KEYWORD,zhuque,DIRECT
-  - DOMAIN-KEYWORD,hdatmos,DIRECT
-  - DOMAIN-KEYWORD,hddolby,DIRECT
-  - DOMAIN-KEYWORD,announce,DIRECT
-  - DOMAIN-KEYWORD,torrent,DIRECT
+  - DOMAIN-KEYWORD,lemonhd,PrivateTracker
+  - DOMAIN-KEYWORD,52pt,PrivateTracker
+  - DOMAIN-KEYWORD,audiences,PrivateTracker
+  - DOMAIN-KEYWORD,agsvpt,PrivateTracker
+  - DOMAIN-KEYWORD,btschool,PrivateTracker
+  - DOMAIN-KEYWORD,ptchdbits,PrivateTracker
+  - DOMAIN-KEYWORD,cyanbug,PrivateTracker
+  - DOMAIN-KEYWORD,carpt,PrivateTracker
+  - DOMAIN-KEYWORD,ptcafe,PrivateTracker
+  - DOMAIN-KEYWORD,dajiao,PrivateTracker
+  - DOMAIN-KEYWORD,discfan,PrivateTracker
+  - DOMAIN-KEYWORD,ecust,PrivateTracker
+  - DOMAIN-KEYWORD,0ff,PrivateTracker
+  - DOMAIN-KEYWORD,fsm,PrivateTracker
+  - DOMAIN-KEYWORD,greatposterwall,PrivateTracker
+  - DOMAIN-KEYWORD,hdsky,PrivateTracker
+  - DOMAIN-KEYWORD,hdhome,PrivateTracker
+  - DOMAIN-KEYWORD,hhanclub,PrivateTracker
+  - DOMAIN-KEYWORD,hdupt,PrivateTracker
+  - DOMAIN-KEYWORD,hdkyl,PrivateTracker
+  - DOMAIN-KEYWORD,hares,PrivateTracker
+  - DOMAIN-KEYWORD,hddolby,PrivateTracker
+  - DOMAIN-KEYWORD,hdvideo,PrivateTracker
+  - DOMAIN-KEYWORD,hdtime,PrivateTracker
+  - DOMAIN-KEYWORD,hdfans,PrivateTracker
+  - DOMAIN-KEYWORD,hdarea,PrivateTracker
+  - DOMAIN-KEYWORD,hdchina,PrivateTracker
+  - DOMAIN-KEYWORD,haidan,PrivateTracker
+  - DOMAIN-KEYWORD,icc2022,PrivateTracker
+  - DOMAIN-KEYWORD,ilolicon,PrivateTracker
+  - DOMAIN-KEYWORD,keepfrds,PrivateTracker
+  - DOMAIN-KEYWORD,kufei,PrivateTracker
+  - DOMAIN-KEYWORD,m-team,PrivateTracker
+  - DOMAIN-KEYWORD,monikadesign,PrivateTracker
+  - DOMAIN-KEYWORD,nicept,PrivateTracker
+  - DOMAIN-KEYWORD,ourbits,PrivateTracker
+  - DOMAIN-KEYWORD,oshen,PrivateTracker
+  - DOMAIN-KEYWORD,okpt,PrivateTracker
+  - DOMAIN-KEYWORD,ptvicomo,PrivateTracker
+  - DOMAIN-KEYWORD,pandapt,PrivateTracker
+  - DOMAIN-KEYWORD,pthome,PrivateTracker
+  - DOMAIN-KEYWORD,ptchina,PrivateTracker
+  - DOMAIN-KEYWORD,qingwapt,PrivateTracker
+  - DOMAIN-KEYWORD,leaves,PrivateTracker
+  - DOMAIN-KEYWORD,rousi,PrivateTracker
+  - DOMAIN-KEYWORD,ptsbao,PrivateTracker
+  - DOMAIN-KEYWORD,star-space,PrivateTracker
+  - DOMAIN-KEYWORD,soulvoice,PrivateTracker
+  - DOMAIN-KEYWORD,totheglory,PrivateTracker
+  - DOMAIN-KEYWORD,ubits,PrivateTracker
+  - DOMAIN-KEYWORD,wintersakura,PrivateTracker
+  - DOMAIN-KEYWORD,crabpt,PrivateTracker
+  - DOMAIN-KEYWORD,hdmayi,PrivateTracker
+  - DOMAIN-KEYWORD,zmpt,PrivateTracker
+  - DOMAIN-KEYWORD,zhuque,PrivateTracker
+  - DOMAIN-KEYWORD,hdatmos,PrivateTracker
+  - DOMAIN-KEYWORD,hddolby,PrivateTracker
+  - DOMAIN-KEYWORD,announce,PrivateTracker
+  - DOMAIN-KEYWORD,torrent,PrivateTracker
 # 分流-国内流量
   - GEOIP,CN,DIRECT
   - DOMAIN-KEYWORD,-cn,DIRECT
