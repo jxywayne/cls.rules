@@ -131,6 +131,7 @@ rules:
 # 分流-PT站
   - DOMAIN-KEYWORD,lemonhd,PrivateTracker
   - DOMAIN-KEYWORD,52pt,PrivateTracker
+  - DOMAIN-KEYWORD,1ptba,PrivateTracker
   - DOMAIN-KEYWORD,audiences,PrivateTracker
   - DOMAIN-KEYWORD,agsvpt,PrivateTracker
   - DOMAIN-KEYWORD,btschool,PrivateTracker
