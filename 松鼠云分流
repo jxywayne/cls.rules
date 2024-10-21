@@ -124,6 +124,8 @@ rules:
   - DOMAIN-KEYWORD,amazon,国外电商
   - DOMAIN-KEYWORD,cdiscount,国外电商
   - DOMAIN-KEYWORD,aliexpress,国外电商
+  - DOMAIN-KEYWORD,manomao,国外电商
+  - DOMAIN-KEYWORD,walmart,国外电商
 # 分流-国内流量
   - GEOIP,CN,DIRECT
 # 分流-PT站
