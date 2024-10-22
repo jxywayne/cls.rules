@@ -116,12 +116,12 @@ rules:
   - DOMAIN-KEYWORD,chatgpt,OpenAI
   - DOMAIN-KEYWORD,openai,OpenAI
 # > Github
-  - DOMAIN-KEYWORD,github，Github
-  - DOMAIN-KEYWORD,rawgit，Github
-  - DOMAIN-KEYWORD,repo，Github
-  - DOMAIN-KEYWORD,myoctocat，Github
-  - DOMAIN-KEYWORD,npm，Github
-  - DOMAIN-KEYWORD,ghcr，Github
+  - DOMAIN-KEYWORD,github,Github
+  - DOMAIN-KEYWORD,rawgit,Github
+  - DOMAIN-KEYWORD,repo,Github
+  - DOMAIN-KEYWORD,myoctocat,Github
+  - DOMAIN-KEYWORD,npm,Github
+  - DOMAIN-KEYWORD,ghcr,Github
 # 分流-Telegram
   - DOMAIN-KEYWORD,telegram,Telegram
   - DOMAIN-KEYWORD,nicegram,Telegram
