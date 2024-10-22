@@ -92,7 +92,7 @@ proxy-groups:
   - {name: Telegram, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
   - {name: 国外电商, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
   - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/cylink.png }
-  - {name: 漏网之鱼, <<: *a3, icon: https://hoofei.com/clash/Icons/Match.png}
+  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
   
   # 节点分组
   - {name: 香港节点, <<: *a4, filter: "香港", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
