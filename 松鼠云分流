@@ -80,7 +80,6 @@ proxy-providers:
   Subscribe:
     <<: *a1
     url: https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f # 你的节点订阅地址
-    path: ./proxy_providers/sub.yaml
     
 proxies: null
 proxy-groups:
