@@ -94,13 +94,13 @@ proxy-groups:
   - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
   
   # 节点分组
-  - {name: 香港节点, <<: *a2, filter: "香港", policy-path=https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f, icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
-  - {name: 日本节点, <<: *a2, filter: "日本", policy-path=https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f, icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
-  - {name: 台湾节点, <<: *a2, filter: "台湾", policy-path=https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f, icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/TW%403x.png}
-  - {name: 美国节点, <<: *a2, filter: "美国", policy-path=https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f, icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
-  - {name: 狮城节点, <<: *a2, filter: "新加坡", policy-path=https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f, icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
-  - {name: 英国节点, <<: *a2, filter: "英国", policy-path=https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f, icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/GB%403x.png}
-  - {name: 德国节点, <<: *a2, filter: "德国", policy-path=https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f, icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/DE%403x.png}
+  - {name: 香港节点, <<: *a4, filter: "香港", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
+  - {name: 日本节点, <<: *a4, filter: "日本", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
+  - {name: 台湾节点, <<: *a4, filter: "台湾",icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/TW%403x.png}
+  - {name: 美国节点, <<: *a4, filter: "美国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
+  - {name: 狮城节点, <<: *a4, filter: "新加坡", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
+  - {name: 英国节点, <<: *a4, filter: "英国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/GB%403x.png}
+  - {name: 德国节点, <<: *a4, filter: "德国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/DE%403x.png}
   
 rules:
 
