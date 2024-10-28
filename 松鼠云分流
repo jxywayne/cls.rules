@@ -112,6 +112,9 @@ rules:
 # 分流-OpenAI
   - DOMAIN-KEYWORD,chatgpt,OpenAI
   - DOMAIN-KEYWORD,openai,OpenAI
+  - DOMAIN-KEYWORD,gemini,OpenAI
+  - DOMAIN-KEYWORD,deepmind,OpenAI
+  - DOMAIN-KEYWORD,colab,OpenAI
 # > Github
   - DOMAIN-KEYWORD,github,Github
   - DOMAIN-KEYWORD,rawgit,Github
