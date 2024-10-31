@@ -1,7 +1,7 @@
 #==========================================
 # @ConfigName        自用 Clash 配置文件
 # @Author            @Squirrel Cloud
-# @UpdateTime        2024年10月20日 09:00
+# @UpdateTime        2024年10月31日 09:00
 #==========================================
 
 port: 7890 # HTTP(S) 代理服务器端口
@@ -80,7 +80,7 @@ proxy-providers:
   Subscribe:
     <<: *a1
     url: https://xpanel.6969819.com/api/v1/client/subscribe?token=277d6d6986fdc42d02bdc2c75cf2b52f # 你的节点订阅地址
-    path: ./proxy_providers/sub.yaml
+    path: ./proxy_providers/Subscribe.yaml
     
 proxies: null
 proxy-groups:
