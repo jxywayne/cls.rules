@@ -79,7 +79,7 @@ ipcidr: &a7 {type: http, behavior: ipcidr, interval: 28800}
 proxy-providers:
   Subscribe:
     <<: *a1
-    url: https://xpanel.6969819.com/api/v1/client/subscribe?token=07cdd0c93f6de60eec866ed784c43f97 # 你的节点订阅地址
+    url: https://xpanel.6969819.com/api/v1/client/subscribe?token=0723r23rf97 # 你的节点订阅地址
     path: ./proxy_providers/Subscribe.yaml
     
 proxies: null
