@@ -68,7 +68,7 @@ dns:
 #   asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
 # 策略组引用
-Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT]}
+Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT]}
 Pro: &a1 {type: http, interval: 28800, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800}}
 Auto: &a4 {type: url-test, lazy: true, url: http://www.gstatic.com/generate_204, interval: 300, use: [Subscribe]}
 Man: &a2 {type: select, use: [Subscribe]}
@@ -85,18 +85,17 @@ proxy-providers:
 proxies: null
 proxy-groups:
   # 分流分组
-  - {name: Google, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
-  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
-  - {name: Telegram, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
-  - {name: Github, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/github.png }
-  - {name: 国外电商, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
-  - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/cylink.png }
-  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,台湾节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
+  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
+  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
+  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
+  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/github.png }
+  - {name: 国外电商, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
+  - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/cylink.png }
+  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
   
   # 节点分组
   - {name: 香港节点, <<: *a2, filter: "香港", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
   - {name: 日本节点, <<: *a4, filter: "日本", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
-  - {name: 台湾节点, <<: *a4, filter: "台湾",icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/TW%403x.png}
   - {name: 美国节点, <<: *a4, filter: "美国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
   - {name: 狮城节点, <<: *a4, filter: "新加坡", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
   - {name: 英国节点, <<: *a4, filter: "英国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/GB%403x.png}
