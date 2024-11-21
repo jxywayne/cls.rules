@@ -60,7 +60,7 @@ dns:
 # geodata-mode: true # 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false，true为dat，此项有默认值 false
 # geodata-loader: memconservative # GEO文件加载模式，standard 标准加载器 / memconservative 专为内存受限 (小内存) 设备优化的加载器 (默认值)
 # geo-auto-update: true # 自动更新 GEO
-# geo-update-interval: 720 # 更新间隔，单位为小时
+# geo-update-interval: 1 # 更新间隔，单位为小时
 # geox-url:
 #   geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
 #   geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
@@ -79,8 +79,7 @@ ipcidr: &a7 {type: http, behavior: ipcidr, interval: 28800}
 proxy-providers:
   Subscribe:
     <<: *a1
-    url: https://xpanel.6969819.com/api/v1/client/subscribe?token=0723r23rf97 # 你的节点订阅地址
-    path: ./proxy_providers/Subscribe.yaml
+    url: https://xpanel.6969819.com/api/v1/cytjtyhz # 你的节点订阅地址
     
 proxies: null
 proxy-groups:
@@ -90,6 +89,7 @@ proxy-groups:
   - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
   - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/github.png }
   - {name: 国外电商, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
+  - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
   - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/cylink.png }
   - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
   
@@ -197,6 +197,45 @@ rules:
   - DOMAIN-KEYWORD,hddolby,PrivateTracker
   - DOMAIN-KEYWORD,announce,PrivateTracker
   - DOMAIN-KEYWORD,torrent,PrivateTracker
+# 分流-HBO
+  - DOMAIN-SUFFIX,hbo.com,HBO
+  - DOMAIN-SUFFIX,hbo.com.c.footprint.net,HBO
+  - DOMAIN-SUFFIX,hbo.com.edgesuite.net,HBO
+  - DOMAIN-SUFFIX,hbo.map.fastly.net,HBO
+  - DOMAIN-SUFFIX,hboasia.com,HBO
+  - DOMAIN-SUFFIX,hboasia1-i.akamaihd.net,HBO
+  - DOMAIN-SUFFIX,hboasia2-i.akamaihd.net,HBO
+  - DOMAIN-SUFFIX,hboasia3-i.akamaihd.net,HBO
+  - DOMAIN-SUFFIX,hboasia4-i.akamaihd.net,HBO
+  - DOMAIN-SUFFIX,hboasia5-i.akamaihd.net,HBO
+  - DOMAIN-SUFFIX,hboasialive.akamaized.net,HBO
+  - DOMAIN-SUFFIX,hbogeo.cust.footprint.net,HBO
+  - DOMAIN-SUFFIX,hbogo.co.th,HBO
+  - DOMAIN-SUFFIX,hbogo.com,HBO
+  - DOMAIN-SUFFIX,hbogo.eu,HBO
+  - DOMAIN-SUFFIX,hbogoasia.com,HBO
+  - DOMAIN-SUFFIX,hbogoasia.hk,HBO
+  - DOMAIN-SUFFIX,hbogoasia.id,HBO
+  - DOMAIN-SUFFIX,hbogoasia.ph,HBO
+  - DOMAIN-SUFFIX,hbogoasia.sg,HBO
+  - DOMAIN-SUFFIX,hbogoasia.tw,HBO
+  - DOMAIN-SUFFIX,hbogoprod-vod.akamaized.net,HBO
+  - DOMAIN-SUFFIX,hbolb.onwardsmg.com,HBO
+  - DOMAIN-SUFFIX,hbomax.com,HBO
+  - DOMAIN-SUFFIX,hbomaxcdn.com,HBO
+  - DOMAIN-SUFFIX,hbomaxdash.s.llnwi.net,HBO
+  - DOMAIN-SUFFIX,hbonow.com,HBO
+  - DOMAIN-SUFFIX,hbounify-prod.evergent.com,HBO
+  - DOMAIN-SUFFIX,manifest.prod.boltdns.net,HBO
+  - DOMAIN-SUFFIX,maxgo.com,HBO
+  - DOMAIN-SUFFIX,now-ashare.com,HBO
+  - DOMAIN-SUFFIX,now-tv.com,HBO
+  - DOMAIN-SUFFIX,now.com,HBO
+  - DOMAIN-SUFFIX,now.com.hk,HBO
+  - DOMAIN-SUFFIX,nowe.com,HBO
+  - DOMAIN-SUFFIX,nowe.hk,HBO
+  - DOMAIN-SUFFIX,players.brightcove.net,HBO
+  - DOMAIN-SUFFIX,youboranqs01.com,HBO
 # 分流-本地IP
   - DOMAIN-SUFFIX,local,DIRECT
   - IP-CIDR,127.0.0.0/8,DIRECT
