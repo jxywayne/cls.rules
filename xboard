@@ -1,7 +1,7 @@
 #==========================================
 # @ConfigName        自用 Clash 配置文件
 # @Author            @Squirrel Cloud
-# @UpdateTime        2024年11月26日 09:00
+# @UpdateTime        2024年12月26日 09:00
 #==========================================
 
 port: 7890 # HTTP(S) 代理服务器端口
@@ -91,7 +91,7 @@ proxy-groups:
   - {name: 国外电商, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
   - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
   - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/netflix.png }
-  - {name: Emby, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/netflix.png }
+  - {name: Emby, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
   - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
   - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
   
@@ -100,7 +100,7 @@ proxy-groups:
   - {name: 日本节点, <<: *a4, filter: "日本", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
   - {name: 美国节点, <<: *a4, filter: "美国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
   - {name: 狮城节点, <<: *a4, filter: "新加坡", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
-  - {name: 台湾节点, <<: *a4, filter: "新加坡", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/CN%403x.png}
+  - {name: 台湾节点, <<: *a4, filter: "台湾坡", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/CN%403x.png}
 
   
 rules:
