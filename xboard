@@ -120,6 +120,7 @@ rules:
   - DOMAIN-KEYWORD,ytimg,Google
 # 分流-Netflix
   - DOMAIN-SUFFIX,netflix.com,Netflix
+  - DOMAIN-SUFFIX,nflxso.net,Netflix
   - DOMAIN-KEYWORD,nflxvideo,Netflix
 # 分流-Emby
   - DOMAIN-SUFFIX,misakaf.org,Emby
