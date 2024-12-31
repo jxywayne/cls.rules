@@ -91,7 +91,7 @@ proxy-groups:
   - {name: 国外电商, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
   - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
   - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/netflix.png }
-  - {name: Emby, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
+  - {name: Emby, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,EMBY节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
   - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
   - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
   
