@@ -69,62 +69,62 @@ dns:
 
 # 策略组引用
 Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT]}
-Pro: &a1 {type: http, interval: 28800, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800}}
+Pro: &a1 {type: http, interval: 1800, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800}}
 Auto: &a4 {type: url-test, lazy: true, url: http://www.gstatic.com/generate_204, interval: 300, use: [Subscribe]}
 Man: &a2 {type: select, use: [Subscribe]}
-classical: &a6 {type: http, behavior: classical, interval: 28800}
-domain: &a5 {type: http, behavior: domain, interval: 28800}
-ipcidr: &a7 {type: http, behavior: ipcidr, interval: 28800}
+classical: &a6 {type: http, behavior: classical, interval: 1800}
+domain: &a5 {type: http, behavior: domain, interval: 1800}
+ipcidr: &a7 {type: http, behavior: ipcidr, interval: 1800}
 
 proxy-providers:
   Subscribe:
     <<: *a1
-    url: https://xboard.135789.xyz/api/v1/client/subscERTY88d60c84cf # 你的节点订阅地址
+    url: https://cloud.89.xyz/ap # 你的节点订阅地址
     
 proxies: null
 proxy-groups:
   # 分流分组
-  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
-  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
-  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
-  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/github.png }
-  - {name: 国外电商, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
-  - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
-  - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/netflix.png }
-  - {name: Emby, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,EMBY节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
-  - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
-  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
+  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
+  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
+  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
+  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/github.png }
+  - {name: 国外电商, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
+  - {name: Paypal, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/paypal.png }
+  - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/netflix.png }
+  - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
+  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
   
   # 节点分组
-  - {name: 香港节点, <<: *a2, filter: "香港", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
-  - {name: 日本节点, <<: *a4, filter: "日本", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
-  - {name: 美国节点, <<: *a4, filter: "美国", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
-  - {name: 狮城节点, <<: *a4, filter: "新加坡", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
-  - {name: 台湾节点, <<: *a4, filter: "台湾坡", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/CN%403x.png}
-  - {name: EMBY节点, <<: *a4, filter: "EMBY", icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/mini/emby.png}
+  - {name: 手动选择, <<: *a2, icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/manual.png}
+  - {name: 香港节点, <<: *a4, filter: "🇭🇰", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
+  - {name: 日本节点, <<: *a4, filter: "🇯🇵", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
+  - {name: 美国节点, <<: *a4, filter: "🇺🇸", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
+  - {name: 狮城节点, <<: *a4, filter: "🇸🇬", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
+  - {name: 台湾节点, <<: *a4, filter: "🇨🇳", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/CN%403x.png}
+  - {name: 德国节点, <<: *a4, filter: "🇩🇪", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/DE%403x.png}
 
   
 rules:
 
-# 分流-OpenAI
-  - DOMAIN-KEYWORD,chatgpt,OpenAI
-  - DOMAIN-KEYWORD,openai,OpenAI
-  - DOMAIN-KEYWORD,gemini,OpenAI
-  - DOMAIN-KEYWORD,deepmind,OpenAI
-  - DOMAIN-KEYWORD,colab,OpenAI
 # 分流-Google
   - DOMAIN-KEYWORD,googlevideo,Google
   - DOMAIN-KEYWORD,google,Google
   - DOMAIN-KEYWORD,youtube,Google
   - DOMAIN-KEYWORD,ggpht,Google
   - DOMAIN-KEYWORD,ytimg,Google
+# 分流-OpenAI
+  - DOMAIN-KEYWORD,chatgpt,OpenAI
+  - DOMAIN-KEYWORD,openai,OpenAI
+  - DOMAIN-KEYWORD,gemini,OpenAI
+  - DOMAIN-KEYWORD,deepmind,OpenAI
+  - DOMAIN-KEYWORD,colab,OpenAI
+# 分流-Paypal
+  - DOMAIN-KEYWORD,paypal,Paypal
 # 分流-Netflix
   - DOMAIN-SUFFIX,netflix.com,Netflix
-  - DOMAIN-SUFFIX,nflxso.net,Netflix
-  - DOMAIN-SUFFIX,nflxext.com,Netflix
   - DOMAIN-KEYWORD,nflxvideo,Netflix
-# 分流-Emby
-  - DOMAIN-SUFFIX,misakaf.org,Emby
+  - DOMAIN-SUFFIX,nflxext.com,Netflix
+  - DOMAIN-SUFFIX,nflxso.net,Netflix
 # > Github
   - DOMAIN-KEYWORD,github,Github
   - DOMAIN-KEYWORD,rawgit,Github
@@ -144,10 +144,9 @@ rules:
   - DOMAIN-KEYWORD,aliexpress,国外电商
   - DOMAIN-KEYWORD,manomao,国外电商
   - DOMAIN-KEYWORD,walmart,国外电商
-# 分流-国内流量
-  - GEOIP,CN,DIRECT
 # 分流-PT站
   - DOMAIN-KEYWORD,lemonhd,PrivateTracker
+  - DOMAIN-KEYWORD,springsunday,PrivateTracker
   - DOMAIN-KEYWORD,52pt,PrivateTracker
   - DOMAIN-KEYWORD,1ptba,PrivateTracker
   - DOMAIN-KEYWORD,audiences,PrivateTracker
@@ -207,45 +206,8 @@ rules:
   - DOMAIN-KEYWORD,hddolby,PrivateTracker
   - DOMAIN-KEYWORD,announce,PrivateTracker
   - DOMAIN-KEYWORD,torrent,PrivateTracker
-# 分流-HBO
-  - DOMAIN-SUFFIX,hbo.com,HBO
-  - DOMAIN-SUFFIX,hbo.com.c.footprint.net,HBO
-  - DOMAIN-SUFFIX,hbo.com.edgesuite.net,HBO
-  - DOMAIN-SUFFIX,hbo.map.fastly.net,HBO
-  - DOMAIN-SUFFIX,hboasia.com,HBO
-  - DOMAIN-SUFFIX,hboasia1-i.akamaihd.net,HBO
-  - DOMAIN-SUFFIX,hboasia2-i.akamaihd.net,HBO
-  - DOMAIN-SUFFIX,hboasia3-i.akamaihd.net,HBO
-  - DOMAIN-SUFFIX,hboasia4-i.akamaihd.net,HBO
-  - DOMAIN-SUFFIX,hboasia5-i.akamaihd.net,HBO
-  - DOMAIN-SUFFIX,hboasialive.akamaized.net,HBO
-  - DOMAIN-SUFFIX,hbogeo.cust.footprint.net,HBO
-  - DOMAIN-SUFFIX,hbogo.co.th,HBO
-  - DOMAIN-SUFFIX,hbogo.com,HBO
-  - DOMAIN-SUFFIX,hbogo.eu,HBO
-  - DOMAIN-SUFFIX,hbogoasia.com,HBO
-  - DOMAIN-SUFFIX,hbogoasia.hk,HBO
-  - DOMAIN-SUFFIX,hbogoasia.id,HBO
-  - DOMAIN-SUFFIX,hbogoasia.ph,HBO
-  - DOMAIN-SUFFIX,hbogoasia.sg,HBO
-  - DOMAIN-SUFFIX,hbogoasia.tw,HBO
-  - DOMAIN-SUFFIX,hbogoprod-vod.akamaized.net,HBO
-  - DOMAIN-SUFFIX,hbolb.onwardsmg.com,HBO
-  - DOMAIN-SUFFIX,hbomax.com,HBO
-  - DOMAIN-SUFFIX,hbomaxcdn.com,HBO
-  - DOMAIN-SUFFIX,hbomaxdash.s.llnwi.net,HBO
-  - DOMAIN-SUFFIX,hbonow.com,HBO
-  - DOMAIN-SUFFIX,hbounify-prod.evergent.com,HBO
-  - DOMAIN-SUFFIX,manifest.prod.boltdns.net,HBO
-  - DOMAIN-SUFFIX,maxgo.com,HBO
-  - DOMAIN-SUFFIX,now-ashare.com,HBO
-  - DOMAIN-SUFFIX,now-tv.com,HBO
-  - DOMAIN-SUFFIX,now.com,HBO
-  - DOMAIN-SUFFIX,now.com.hk,HBO
-  - DOMAIN-SUFFIX,nowe.com,HBO
-  - DOMAIN-SUFFIX,nowe.hk,HBO
-  - DOMAIN-SUFFIX,players.brightcove.net,HBO
-  - DOMAIN-SUFFIX,youboranqs01.com,HBO
+# 分流-国内流量
+  - GEOIP,CN,DIRECT
 # 分流-本地IP
   - DOMAIN-SUFFIX,local,DIRECT
   - IP-CIDR,127.0.0.0/8,DIRECT
