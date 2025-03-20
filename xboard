@@ -1,71 +1,98 @@
 #==========================================
 # @ConfigName        自用 Clash 配置文件
 # @Author            @Squirrel Cloud
-# @UpdateTime        2024年12月31日 09:00
+# @UpdateTime        2025年3月20日 09:00
 #==========================================
 
-port: 7890 # HTTP(S) 代理服务器端口
-socks-port: 7891 # SOCKS5 代理端口
-mixed-port: 7893 # HTTP(S) 和 SOCKS 代理混合端口
-redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
-tproxy-port: 7893 # 透明代理端口，用于 Linux (TProxy TCP and TProxy UDP)
-allow-lan: false # 允许局域网连接
-bind-address: '*' # 绑定 IP 地址，仅作用于 allow-lan 为 true 时，'*'表示所有地址
-mode: rule # 'rule' 规则 / 'global' 全局 / 'direct' 直连
-log-level: silent # 日志等级 silent/error/warning/info/debug
-ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
-external-controller: 127.0.0.1:9090
-hosts:
-  # '*.mihomo.dev': 127.0.0.1
-  # '.dev': 127.0.0.1
-  # 'alpha.mihomo.dev': '::1'
-  # test.com: [1.1.1.1, 2.2.2.2]
-  # home.lan: lan # lan 为特别字段，将加入本地所有网卡的地址
-  # baidu.com: google.com # 只允许配置一个别名
-
-# DNS 配置
-dns:
-  cache-algorithm: arc
-  enable: false # 关闭将使用系统 DNS
-  prefer-h3: false # 是否开启 DoH 支持 HTTP/3，将并发尝试
-  listen: 0.0.0.0:53 # 开启 DNS 服务器监听
-  # ipv6: false # false 将返回 AAAA 的空结果
-  # ipv6-timeout: 300 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
-  # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
-  # 只能使用纯 IP 地址，可使用加密 DNS
-  default-nameserver:
-    - 119.29.29.29 # 腾讯公共DNS
-    - 114.114.114.114 # 114DNS
-  enhanced-mode: fake-ip # redir-host or fake-ip
-  fake-ip-range: 198.18.0.1/16 # Fake IP 池设置
-  nameserver:
-    - 119.29.29.29 # 腾讯公共DNS
-    - 114.114.114.114 # 114DNS
-    - https://doh.pub/dns-query # DNS over HTTPS
-    - https://dns.alidns.com/dns-query#h3=true # 强制 HTTP/3，与 perfer-h3 无关，强制开启 DoH 的 HTTP/3 支持，若不支持将无法使用
-    - https://mozilla.cloudflare-dns.com/dns-query#DNS&h3=true # 指定策略组和使用 HTTP/3
-    - dhcp://en0 # DNS from DHCP
-    - quic://dns.adguard.com:784 # DNS over QUIC
+# 全局配置
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+ipv6: false
+allow-lan: true
+unified-delay: true
+tcp-concurrent: true
   
-  # 配置 fallback
-  fallback:
-   - tcp://1.1.1.1
-  fallback-filter:
-    geoip: true # 配置是否使用 geoip
-    geoip-code: CN # 当 nameserver 域名的 IP 查询 geoip 库为 CN 时，不使用 fallback 中的 DNS 查询结果
-    ipcidr:
-      - 240.0.0.0/4
+# 控制面板
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: "/etc/mihomo/run/ui"
+external-ui-name: zashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
-# GEO配置
-# geodata-mode: true # 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false，true为dat，此项有默认值 false
-# geodata-loader: memconservative # GEO文件加载模式，standard 标准加载器 / memconservative 专为内存受限 (小内存) 设备优化的加载器 (默认值)
-# geo-auto-update: true # 自动更新 GEO
-# geo-update-interval: 1 # 更新间隔，单位为小时
-# geox-url:
-#   geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
-#   geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
-#   mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
-#   asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+# 匹配进程 always/strict/off
+find-process-mode: strict
+global-client-fingerprint: chrome
+keep-alive-idle: 600
+keep-alive-interval: 30
+
+# 策略组选择和fakeip缓存
+profile:
+  store-selected: true
+  store-fake-ip: true
+  
+# 流量嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+    - "+.apple.com"
+    
+# 代理模式
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  
+# DNS模块
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  # 模式切换 redir-host / fake-ip
+  enhanced-mode: fake-ip
+  fake-ip-range: 28.0.0.1/8
+  # 模式切换 whitelist/blacklist 
+  # 黑名单模式表示如果匹配成功则不返回 Fake-IP, 白名单模式时只有匹配成功才返回 Fake-IP
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "rule-set:private_domain,cn_domain"
+    - "+.services.googleapis.cn"
+    - "+.xn--ngstr-lra8j.com"
+    - "time.*.com"
+    - "+.pool.ntp.org"
+    - "+.ntp.tencent.com"
+    - "+.ntp1.aliyun.com"
+    - "+.ntp.ntsc.ac.cn"
+    - "+.cn.ntp.org.cn"
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
 
 # 策略组引用
 Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT]}
@@ -79,71 +106,64 @@ ipcidr: &a7 {type: http, behavior: ipcidr, interval: 1800}
 proxy-providers:
   Subscribe:
     <<: *a1
-    url: https://cloud.89.xyz/ap # 你的节点订阅地址
+    url: https://clsdfgf # 你的节点订阅地址
     
 proxies: null
 proxy-groups:
   # 分流分组
-  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/google.png }
-  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://hoofei.com/clash/Icons/OpenAI.png }
-  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/telegram.png }
-  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/github.png }
-  - {name: 国外电商, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/blibee.png }
-  - {name: Paypal, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/paypal.png }
-  - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/netflix.png }
-  - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
-  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://hoofei.com/clash/Icons/Match.png}
+  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Google.png }
+  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/ChatGPT.png }
+  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Telegram.png }
+  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/GitHub.png }
+  - {name: 德国网站, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Amazon.png }
+  - {name: 波兰网站, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://icons-for-free.com/iff/png/512/Allegro-1329545813030356256.png }
+  - {name: Paypal, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/PayPal.png }
+  - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Netflix.png }
+  - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
+  - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
+  - {name: Speedtest, type: select, proxies: [手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/SpeedTest.png }
+  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Globefish.png}
   
   # 节点分组
-  - {name: 手动选择, <<: *a2, icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/manual.png}
+  - {name: 手动选择, <<: *a2, icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Location.png}
   - {name: 香港节点, <<: *a4, filter: "🇭🇰", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
   - {name: 日本节点, <<: *a4, filter: "🇯🇵", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
   - {name: 美国节点, <<: *a4, filter: "🇺🇸", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
   - {name: 狮城节点, <<: *a4, filter: "🇸🇬", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
   - {name: 台湾节点, <<: *a4, filter: "🇨🇳", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/CN%403x.png}
   - {name: 德国节点, <<: *a4, filter: "🇩🇪", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/DE%403x.png}
-
+  - {name: 波兰节点, <<: *a4, filter: "🇵🇱", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/PL%403x.png}
   
 rules:
 
 # 分流-Google
-  - DOMAIN-KEYWORD,googlevideo,Google
-  - DOMAIN-KEYWORD,google,Google
-  - DOMAIN-KEYWORD,youtube,Google
-  - DOMAIN-KEYWORD,ggpht,Google
-  - DOMAIN-KEYWORD,ytimg,Google
+  - GEOSITE,google,Google
+  - GEOIP,google,Google
 # 分流-OpenAI
-  - DOMAIN-KEYWORD,chatgpt,OpenAI
-  - DOMAIN-KEYWORD,openai,OpenAI
-  - DOMAIN-KEYWORD,gemini,OpenAI
-  - DOMAIN-KEYWORD,deepmind,OpenAI
-  - DOMAIN-KEYWORD,colab,OpenAI
+  - GEOSITE,openai,OpenAI
+  - GEOIP,openai,OpenAI
 # 分流-Paypal
-  - DOMAIN-KEYWORD,paypal,Paypal
+  - GEOSITE,paypal,Paypal
+  - GEOIP,paypal,Paypal
 # 分流-Netflix
-  - DOMAIN-SUFFIX,netflix.com,Netflix
-  - DOMAIN-KEYWORD,nflxvideo,Netflix
-  - DOMAIN-SUFFIX,nflxext.com,Netflix
-  - DOMAIN-SUFFIX,nflxso.net,Netflix
+  - GEOSITE,hbo,HBO
+  - GEOIP,hbo,HBO
+# 分流-HBO
+  - GEOSITE,netflix,Netflix
+  - GEOIP,netflix,Netflix
 # > Github
-  - DOMAIN-KEYWORD,github,Github
-  - DOMAIN-KEYWORD,rawgit,Github
-  - DOMAIN-KEYWORD,repo,Github
-  - DOMAIN-KEYWORD,myoctocat,Github
-  - DOMAIN-KEYWORD,npm,Github
-  - DOMAIN-KEYWORD,ghcr,Github
+  - GEOSITE,github,Github
+  - GEOIP,github,Github
 # 分流-Telegram
-  - DOMAIN-KEYWORD,telegram,Telegram
-  - DOMAIN-KEYWORD,nicegram,Telegram
   - GEOIP,telegram,Telegram
-# 分流-国外电商
-  - DOMAIN-KEYWORD,allegro,国外电商
-  - DOMAIN-KEYWORD,ebay,国外电商
-  - DOMAIN-KEYWORD,amazon,国外电商
-  - DOMAIN-KEYWORD,cdiscount,国外电商
-  - DOMAIN-KEYWORD,aliexpress,国外电商
-  - DOMAIN-KEYWORD,manomao,国外电商
-  - DOMAIN-KEYWORD,walmart,国外电商
+  - GEOSITE,telegram,Telegram
+# 分流-德国网站
+  - DOMAIN-KEYWORD,amazon.de,德国网站
+  - DOMAIN-KEYWORD,eBay.de,德国网站
+# 分流-波兰网站
+  - DOMAIN-KEYWORD,allegro,波兰网站
+# 分流-Speedtest
+  - GEOSITE,ookla-speedtest,Speedtest
 # 分流-PT站
   - DOMAIN-KEYWORD,lemonhd,PrivateTracker
   - DOMAIN-KEYWORD,springsunday,PrivateTracker
@@ -207,7 +227,7 @@ rules:
   - DOMAIN-KEYWORD,announce,PrivateTracker
   - DOMAIN-KEYWORD,torrent,PrivateTracker
 # 分流-国内流量
-  - GEOIP,CN,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
 # 分流-本地IP
   - DOMAIN-SUFFIX,local,DIRECT
   - IP-CIDR,127.0.0.0/8,DIRECT
