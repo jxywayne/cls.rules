@@ -1,7 +1,7 @@
 #==========================================
 # @ConfigName        自用 Clash 配置文件
 # @Author            @Squirrel Cloud
-# @UpdateTime        2025年3月20日 09:00
+# @UpdateTime        2025年2月20日 09:00
 #==========================================
 
 # 全局配置
@@ -106,23 +106,23 @@ ipcidr: &a7 {type: http, behavior: ipcidr, interval: 1800}
 proxy-providers:
   Subscribe:
     <<: *a1
-    url: https://clsdfgf # 你的节点订阅地址
+    url: https://c # 你的节点订阅地址
     
 proxies: null
 proxy-groups:
   # 分流分组
-  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Google.png }
-  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/ChatGPT.png }
-  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Telegram.png }
-  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/GitHub.png }
-  - {name: 德国网站, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Amazon.png }
-  - {name: 波兰网站, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://icons-for-free.com/iff/png/512/Allegro-1329545813030356256.png }
-  - {name: Paypal, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/PayPal.png }
-  - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Netflix.png }
-  - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
-  - {name: PrivateTracker, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png }
+  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Google.png }
+  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/ChatGPT.png }
+  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Telegram.png }
+  - {name: Twitter, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Twitter.png }
+  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/GitHub.png }
+  - {name: Microsoft, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Microsoft.png }
+  - {name: 欧洲网站, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Amazon.png }
+  - {name: Paypal, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/PayPal.png }
+  - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Netflix.png }
+  - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
   - {name: Speedtest, type: select, proxies: [手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/SpeedTest.png }
-  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,波兰节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Globefish.png}
+  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Globefish.png}
   
   # 节点分组
   - {name: 手动选择, <<: *a2, icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Location.png}
@@ -132,13 +132,18 @@ proxy-groups:
   - {name: 狮城节点, <<: *a4, filter: "🇸🇬", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
   - {name: 台湾节点, <<: *a4, filter: "🇨🇳", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/CN%403x.png}
   - {name: 德国节点, <<: *a4, filter: "🇩🇪", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/DE%403x.png}
-  - {name: 波兰节点, <<: *a4, filter: "🇵🇱", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/PL%403x.png}
   
 rules:
 
 # 分流-Google
   - GEOSITE,google,Google
   - GEOIP,google,Google
+# 分流-Twitter
+  - GEOSITE,twitter,Twitter
+  - GEOIP,twitter,Twitter
+# 分流-Microsoft
+  - GEOSITE,microsoft,Microsoft
+  - GEOIP,microsoft,Microsoft
 # 分流-OpenAI
   - GEOSITE,openai,OpenAI
   - GEOIP,openai,OpenAI
@@ -157,75 +162,12 @@ rules:
 # 分流-Telegram
   - GEOIP,telegram,Telegram
   - GEOSITE,telegram,Telegram
-# 分流-德国网站
-  - DOMAIN-KEYWORD,amazon.de,德国网站
-  - DOMAIN-KEYWORD,eBay.de,德国网站
-# 分流-波兰网站
-  - DOMAIN-KEYWORD,allegro,波兰网站
+# 分流-欧洲网站
+  - DOMAIN-KEYWORD,amazon.de,欧洲网站
+  - DOMAIN-KEYWORD,eBay.de,欧洲网站
+  - DOMAIN-KEYWORD,allegro,欧洲网站
 # 分流-Speedtest
   - GEOSITE,ookla-speedtest,Speedtest
-# 分流-PT站
-  - DOMAIN-KEYWORD,lemonhd,PrivateTracker
-  - DOMAIN-KEYWORD,springsunday,PrivateTracker
-  - DOMAIN-KEYWORD,52pt,PrivateTracker
-  - DOMAIN-KEYWORD,1ptba,PrivateTracker
-  - DOMAIN-KEYWORD,audiences,PrivateTracker
-  - DOMAIN-KEYWORD,agsvpt,PrivateTracker
-  - DOMAIN-KEYWORD,btschool,PrivateTracker
-  - DOMAIN-KEYWORD,ptchdbits,PrivateTracker
-  - DOMAIN-KEYWORD,cyanbug,PrivateTracker
-  - DOMAIN-KEYWORD,carpt,PrivateTracker
-  - DOMAIN-KEYWORD,ptcafe,PrivateTracker
-  - DOMAIN-KEYWORD,dajiao,PrivateTracker
-  - DOMAIN-KEYWORD,discfan,PrivateTracker
-  - DOMAIN-KEYWORD,ecust,PrivateTracker
-  - DOMAIN-KEYWORD,0ff,PrivateTracker
-  - DOMAIN-KEYWORD,fsm,PrivateTracker
-  - DOMAIN-KEYWORD,greatposterwall,PrivateTracker
-  - DOMAIN-KEYWORD,hdsky,PrivateTracker
-  - DOMAIN-KEYWORD,hdhome,PrivateTracker
-  - DOMAIN-KEYWORD,hhanclub,PrivateTracker
-  - DOMAIN-KEYWORD,hdupt,PrivateTracker
-  - DOMAIN-KEYWORD,hdkyl,PrivateTracker
-  - DOMAIN-KEYWORD,hares,PrivateTracker
-  - DOMAIN-KEYWORD,hddolby,PrivateTracker
-  - DOMAIN-KEYWORD,hdvideo,PrivateTracker
-  - DOMAIN-KEYWORD,hdtime,PrivateTracker
-  - DOMAIN-KEYWORD,hdfans,PrivateTracker
-  - DOMAIN-KEYWORD,hdarea,PrivateTracker
-  - DOMAIN-KEYWORD,hdchina,PrivateTracker
-  - DOMAIN-KEYWORD,haidan,PrivateTracker
-  - DOMAIN-KEYWORD,icc2022,PrivateTracker
-  - DOMAIN-KEYWORD,ilolicon,PrivateTracker
-  - DOMAIN-KEYWORD,keepfrds,PrivateTracker
-  - DOMAIN-KEYWORD,kufei,PrivateTracker
-  - DOMAIN-KEYWORD,m-team,PrivateTracker
-  - DOMAIN-KEYWORD,monikadesign,PrivateTracker
-  - DOMAIN-KEYWORD,nicept,PrivateTracker
-  - DOMAIN-KEYWORD,ourbits,PrivateTracker
-  - DOMAIN-KEYWORD,oshen,PrivateTracker
-  - DOMAIN-KEYWORD,okpt,PrivateTracker
-  - DOMAIN-KEYWORD,ptvicomo,PrivateTracker
-  - DOMAIN-KEYWORD,pandapt,PrivateTracker
-  - DOMAIN-KEYWORD,pthome,PrivateTracker
-  - DOMAIN-KEYWORD,ptchina,PrivateTracker
-  - DOMAIN-KEYWORD,qingwapt,PrivateTracker
-  - DOMAIN-KEYWORD,leaves,PrivateTracker
-  - DOMAIN-KEYWORD,rousi,PrivateTracker
-  - DOMAIN-KEYWORD,ptsbao,PrivateTracker
-  - DOMAIN-KEYWORD,star-space,PrivateTracker
-  - DOMAIN-KEYWORD,soulvoice,PrivateTracker
-  - DOMAIN-KEYWORD,totheglory,PrivateTracker
-  - DOMAIN-KEYWORD,ubits,PrivateTracker
-  - DOMAIN-KEYWORD,wintersakura,PrivateTracker
-  - DOMAIN-KEYWORD,crabpt,PrivateTracker
-  - DOMAIN-KEYWORD,hdmayi,PrivateTracker
-  - DOMAIN-KEYWORD,zmpt,PrivateTracker
-  - DOMAIN-KEYWORD,zhuque,PrivateTracker
-  - DOMAIN-KEYWORD,hdatmos,PrivateTracker
-  - DOMAIN-KEYWORD,hddolby,PrivateTracker
-  - DOMAIN-KEYWORD,announce,PrivateTracker
-  - DOMAIN-KEYWORD,torrent,PrivateTracker
 # 分流-国内流量
   - GEOIP,CN,DIRECT,no-resolve
 # 分流-本地IP
