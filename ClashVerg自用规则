@@ -1,41 +1,49 @@
-#==========================================
-# @ConfigName        自用 Clash 配置文件
-# @Author            @Squirrel Cloud
-# @UpdateTime        2025年2月20日 09:00
-#==========================================
+# 深巷有喵的「Clash_Max」配置
+# 日期：2025-07-05
+# 版本：2.1.9
+# 配置作者：https://github.com/Rabbit-Spec
+# 适用版本：所有使用 Mihomo 内核的程序
 
-# 全局配置
 port: 7890
 socks-port: 7891
-redir-port: 7892
-mixed-port: 7893
+mixed-port: 7892
+redir-port: 7893
 tproxy-port: 7894
-ipv6: false
-allow-lan: true
-unified-delay: true
-tcp-concurrent: true
-  
-# 控制面板
-external-controller: 0.0.0.0:9090
-secret: ""
-external-ui: "/etc/mihomo/run/ui"
-external-ui-name: zashboard
-external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
-# 匹配进程 always/strict/off
+unified-delay: true
+geodata-mode: false
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+tcp-concurrent: true
 find-process-mode: strict
 global-client-fingerprint: chrome
-keep-alive-idle: 600
-keep-alive-interval: 30
 
-# 策略组选择和fakeip缓存
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+udp: true
+
+external-controller: 0.0.0.0:9090
+# external-ui: ui
+# external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
+
+geox-url:
+  # geoip: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
+  # geosite: 'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat'
+  mmdb: 'https://geodata.kelee.one/Country-Masaiki.mmdb'
+  asn: 'https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb'
+
 profile:
   store-selected: true
   store-fake-ip: true
-  
-# 流量嗅探
+
 sniffer:
   enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -46,139 +54,133 @@ sniffer:
       ports: [443, 8443]
   force-domain:
     - +.v2ex.com
+
   skip-domain:
-    - "dlg.io.mi.com"
-    - "+.push.apple.com"
-    - "+.apple.com"
-    
-# 代理模式
+    - Mijia Cloud
+
 tun:
   enable: true
-  stack: mixed
+  stack: system
   dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
+    - any:53
   auto-route: true
-  auto-redirect: true
   auto-detect-interface: true
-  
-# DNS模块
+
+# P2P下载端口
+listeners:
+- name: socks5-in-1
+  type: socks
+  port: 10808
+  listen: 0.0.0.0
+  udp: true
+  users: []
+  proxy: DIRECT
+
 dns:
   enable: true
+  prefer-h3: true
   listen: 0.0.0.0:1053
   ipv6: false
-  respect-rules: true
-  # 模式切换 redir-host / fake-ip
   enhanced-mode: fake-ip
   fake-ip-range: 28.0.0.1/8
-  # 模式切换 whitelist/blacklist 
-  # 黑名单模式表示如果匹配成功则不返回 Fake-IP, 白名单模式时只有匹配成功才返回 Fake-IP
-  fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    - "rule-set:private_domain,cn_domain"
-    - "+.services.googleapis.cn"
-    - "+.xn--ngstr-lra8j.com"
-    - "time.*.com"
-    - "+.pool.ntp.org"
-    - "+.ntp.tencent.com"
-    - "+.ntp1.aliyun.com"
-    - "+.ntp.ntsc.ac.cn"
-    - "+.cn.ntp.org.cn"
+    - "*"
+    - +.lan
   default-nameserver:
     - 223.5.5.5
-    - 119.29.29.29
-  proxy-server-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
+    - 223.6.6.6
   nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
 
-# 策略组引用
-Pr: &a3 {type: select, proxies: [自动选择,手动选择,香港节点,美国节点,狮城节点,日本节点,德国节点,英国节点,DIRECT]}
-Pro: &a1 {type: http, interval: 1800, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800}}
-Auto: &a4 {type: url-test, lazy: true, url: http://www.gstatic.com/generate_204, interval: 300, use: [Subscribe]}
-Man: &a2 {type: select, use: [Subscribe]}
-classical: &a6 {type: http, behavior: classical, interval: 1800}
-domain: &a5 {type: http, behavior: domain, interval: 1800}
-ipcidr: &a7 {type: http, behavior: ipcidr, interval: 1800}
+proxies:
 
-proxy-providers:
-  Subscribe:
-    <<: *a1
-    url: https://c # 你的节点订阅地址
-    
-proxies: null
-proxy-groups:
-  # 分流分组
-  - {name: Google, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Google.png }
-  - {name: OpenAI, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/ChatGPT.png }
-  - {name: Telegram, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Telegram.png }
-  - {name: Twitter, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Twitter.png }
-  - {name: Github, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/GitHub.png }
-  - {name: Microsoft, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Microsoft.png }
-  - {name: 欧洲网站, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Amazon.png }
-  - {name: Paypal, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/PayPal.png }
-  - {name: Netflix, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Netflix.png }
-  - {name: HBO, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/hbo.png }
-  - {name: Speedtest, type: select, proxies: [手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/SpeedTest.png }
-  - {name: 漏网之鱼, type: select, proxies: [香港节点,美国节点,狮城节点,日本节点,台湾节点,德国节点,手动选择,DIRECT], icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Globefish.png}
-  
-  # 节点分组
-  - {name: 手动选择, <<: *a2, icon: https://raw.githubusercontent.com/Vbaethon/HOMOMIX/refs/heads/main/Icon/Color/Location.png}
-  - {name: 香港节点, <<: *a4, filter: "🇭🇰", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/HK%403x.png}
-  - {name: 日本节点, <<: *a4, filter: "🇯🇵", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/JP%403x.png}
-  - {name: 美国节点, <<: *a4, filter: "🇺🇸", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/US%403x.png}
-  - {name: 狮城节点, <<: *a4, filter: "🇸🇬", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/SG%403x.png}
-  - {name: 台湾节点, <<: *a4, filter: "🇨🇳", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/CN%403x.png}
-  - {name: 德国节点, <<: *a4, filter: "🇩🇪", icon: https://raw.githubusercontent.com/yammadev/flag-icons/refs/heads/master/png/DE%403x.png}
-  
+# 锚点 - 节点订阅的参数 [每半小时更新一次订阅节点，每 60 秒一次健康检查]
+NodeParam: &NodeParam {type: http, interval: 1800, health-check: {enable: true, url: 'http://connectivitycheck.gstatic.com/generate_204', interval: 60}}
+
+# 锚点 - 节点订阅
+proxy-providers: 
+  我的节点:
+    url: '机场订阅'
+    <<: *NodeParam
+    path: './proxy_provider/Providers.yaml'
+
+# 锚点 - 节点筛选组
+FilterExpire: &FilterExpire '^(?=.*((?i)Traffic|Expire|Exp|到期|过期)).*$'
+FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b))).*$'
+FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b))).*$'
+FilterKR: &FilterKR '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|Korea)\b))).*$'
+FilterSG: &FilterSG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b))).*$'
+FilterUS: &FilterUS '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|United States)\b))).*$'
+FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|United Kingdom)\b))).*$'
+FilterFR: &FilterFR '^(?=.*((?i)🇫🇷|法国|(\b(FR|France)\b))).*$'
+FilterDE: &FilterDE '^(?=.*((?i)🇩🇪|德国|(\b(DE|Germany)\b))).*$'
+
+# 锚点 - 故障转移参数 [每 10 秒一次惰性健康检查，时延超过 3 秒判定为失败，失败 3 次则自动触发健康检查]
+FallBack: &FallBack {type: fallback, interval: 10, lazy: true, url: 'http://connectivitycheck.gstatic.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, hidden: true, include-all-providers: true}
+# 锚点 - 规则参数 [每天更新一次订阅规则，更新规则时使用Proxy策略]
+RuleSet: &RuleSet {type: http, behavior: classical, interval: 86400, format: yaml, proxy: Proxy}
+
+# 策略组
+proxy-groups: 
+  - {name: info, type: select, include-all: true, filter: *FilterExpire,icon: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/flower.png'}
+  - {name: YouTube, type: select, proxies: [Proxy, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点, 🇺🇸 美国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png'}
+  - {name: Telegram, type: select, proxies: [Proxy, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点, 🇺🇸 美国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png'}
+  - {name: Twitter, type: select, proxies: [Proxy, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点, 🇺🇸 美国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点], icon: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/twitter.png'}
+  - {name: Github, type: select, proxies: [Proxy, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点, 🇺🇸 美国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点], icon: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/github.png'}
+  - {name: emby, type: select, proxies: [Proxy, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点, 🇺🇸 美国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点], icon: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/emby.png'}
+  - {name: Proxy, type: select, proxies: [🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点, 🇺🇸 美国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点], icon: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/icon/color/airport.png'}
+
+
+  - {name: 🇭🇰 香港节点, <<: *FallBack, filter: *FilterHK}
+  - {name: 🇯🇵 日本节点, <<: *FallBack, filter: *FilterJP}
+  - {name: 🇰🇷 韩国节点, <<: *FallBack, filter: *FilterKR}
+  - {name: 🇸🇬 狮城节点, <<: *FallBack, filter: *FilterSG}
+  - {name: 🇺🇸 美国节点, <<: *FallBack, filter: *FilterUS}
+  - {name: 🇬🇧 英国节点, <<: *FallBack, filter: *FilterUK}
+  - {name: 🇫🇷 法国节点, <<: *FallBack, filter: *FilterFR}
+  - {name: 🇩🇪 德国节点, <<: *FallBack, filter: *FilterDE}
+
+# 订阅规则
+rule-providers:
+
+  YouTube:
+    <<: *RuleSet
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube_No_Resolve.yaml'
+    path: './RuleSet/YouTube.yaml'
+
+  Proxy:
+    <<: *RuleSet
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical_No_Resolve.yaml'
+    path: './RuleSet/Proxy.yaml'
+
+  China:
+    <<: *RuleSet
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml'
+    path: './RuleSet/China.yaml'
+
+  LAN:
+    <<: *RuleSet
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml'
+    path: './RuleSet/LAN.yaml'
+
+  Twitter:
+    <<: *RuleSet
+    url: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Twitter/Twitter.yaml'
+    path: './RuleSet/Twitter.yaml'
+
+  Github:
+    <<: *RuleSet
+    url: 'https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml'
+    path: './RuleSet/GitHub.yaml'
+
+# 分流规则指向
 rules:
-
-# 分流-Google
-  - GEOSITE,google,Google
-  - GEOIP,google,Google
-# 分流-Twitter
-  - GEOSITE,twitter,Twitter
-  - GEOIP,twitter,Twitter
-# 分流-Microsoft
-  - GEOSITE,microsoft,Microsoft
-  - GEOIP,microsoft,Microsoft
-# 分流-OpenAI
-  - GEOSITE,openai,OpenAI
-  - GEOIP,openai,OpenAI
-# 分流-Paypal
-  - GEOSITE,paypal,Paypal
-  - GEOIP,paypal,Paypal
-# 分流-Netflix
-  - GEOSITE,hbo,HBO
-  - GEOIP,hbo,HBO
-# 分流-HBO
-  - GEOSITE,netflix,Netflix
-  - GEOIP,netflix,Netflix
-# > Github
-  - GEOSITE,github,Github
-  - GEOIP,github,Github
-# 分流-Telegram
-  - GEOIP,telegram,Telegram
-  - GEOSITE,telegram,Telegram
-# 分流-欧洲网站
-  - DOMAIN-KEYWORD,amazon.de,欧洲网站
-  - DOMAIN-KEYWORD,eBay.de,欧洲网站
-  - DOMAIN-KEYWORD,allegro,欧洲网站
-# 分流-Speedtest
-  - GEOSITE,ookla-speedtest,Speedtest
-# 分流-国内流量
-  - GEOIP,CN,DIRECT,no-resolve
-# 分流-本地IP
-  - DOMAIN-SUFFIX,local,DIRECT
-  - IP-CIDR,127.0.0.0/8,DIRECT
-  - IP-CIDR,172.16.0.0/12,DIRECT
-  - IP-CIDR,192.168.0.0/16,DIRECT
-  - IP-CIDR,10.0.0.0/8,DIRECT
-  - IP-CIDR,17.0.0.0/8,DIRECT
-  - IP-CIDR,100.64.0.0/10,DIRECT
-  - IP-CIDR,224.0.0.0/4,DIRECT
-  - IP-CIDR6,fe80::/10,DIRECT
-# 分流-其他
-  - MATCH,漏网之鱼
+ - RULE-SET,China,DIRECT
+ - GEOIP,CN,DIRECT
+ - RULE-SET,YouTube,YouTube
+ - RULE-SET,Github,Github
+ - RULE-SET,Twitter,Twitter
+ - RULE-SET,Proxy,Proxy
+ - RULE-SET,LAN,DIRECT
+ - MATCH,Proxy
